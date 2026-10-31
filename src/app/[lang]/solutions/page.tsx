@@ -17,7 +17,7 @@ export default async function SolutionsPage({ params }: { params: Promise<{ lang
 
   return (
     <>
-      <PageHeader eyebrow={t.solutions.eyebrow} title={t.solutions.title} subtitle={t.solutions.subtitle} />
+      <PageHeader eyebrow={t.solutions.eyebrow} title={t.solutions.title} subtitle={t.solutions.subtitle} image="collage" />
       <Solutions lang={lang} t={t.solutions} heading={false} />
       <Reports lang={lang} t={t.reports} />
       <CtaBanner lang={lang} t={t.cta} />

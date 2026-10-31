@@ -2,6 +2,7 @@ import Link from "next/link";
 import { asset, type Locale } from "@/i18n/config";
 import { BLACKMIRA_URL, type Dictionary } from "@/i18n/dictionaries";
 import { ArrowIcon, CheckIcon, DownloadIcon, ExternalIcon, PlayIcon, ShieldIcon, iconMap } from "./Icons";
+import { BgPhoto, photo } from "./Sections";
 
 type H = Dictionary["human"];
 type L = H["loop"];
@@ -208,9 +209,14 @@ export function HumanTeaser({ lang, h }: { lang: Locale; h: H }) {
           </div>
           <BlackMiraBadge h={h} className="mt-8" />
         </div>
-        <div className="grid gap-4">
-          <SimMock t={h.loop.sims} />
-          <RiskMock t={h.loop.risk} />
+        <div className="relative lg:pb-16 lg:pl-10">
+          <div className="relative overflow-hidden rounded-3xl border border-line">
+            <img src={photo("human-phishing")} alt="" loading="lazy" className="aspect-[4/3] w-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent" aria-hidden />
+          </div>
+          <div className="mt-4 lg:absolute lg:bottom-0 lg:left-0 lg:mt-0 lg:w-[22rem]">
+            <SimMock t={h.loop.sims} />
+          </div>
         </div>
       </div>
     </section>
@@ -220,7 +226,7 @@ export function HumanTeaser({ lang, h }: { lang: Locale; h: H }) {
 export function HumanHero({ lang, h }: { lang: Locale; h: H }) {
   return (
     <section className="relative overflow-hidden border-b border-line">
-      <div className="bg-grid absolute inset-0" />
+      <BgPhoto name="human-team" fade="bg-gradient-to-r from-ink via-ink/85 to-ink/50 max-lg:bg-ink/85" />
       <div className="relative mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] items-center gap-12 px-4 py-20 sm:px-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:py-24">
         <div>
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-brand">{h.eyebrow}</p>
@@ -281,7 +287,11 @@ export function HumanViews({ h }: { h: H }) {
           <h2 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">{v.title}</h2>
           <p className="mt-4 text-lg text-muted">{v.subtitle}</p>
         </div>
-        <div className="mt-12 grid gap-5 md:grid-cols-2">
+        <div className="relative mt-12 overflow-hidden rounded-3xl border border-line">
+          <img src={photo("human-training")} alt="" loading="lazy" className="h-56 w-full object-cover sm:h-72 lg:h-80" />
+          <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" aria-hidden />
+        </div>
+        <div className="mt-5 grid gap-5 md:grid-cols-2">
           {[v.org, v.person].map((x) => (
             <article key={x.tab} className="rounded-2xl border border-line bg-panel p-8">
               <p className="text-xs font-semibold uppercase tracking-wider text-brand">{x.tab}</p>

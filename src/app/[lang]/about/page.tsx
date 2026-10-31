@@ -19,7 +19,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
 
   return (
     <>
-      <PageHeader title={a.title} subtitle={a.subtitle} />
+      <PageHeader title={a.title} subtitle={a.subtitle} image="infrastructure" />
       <section className="mx-auto grid max-w-7xl gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2">
         <div>
           <SectionHeading align="left" title={a.mission.title} />

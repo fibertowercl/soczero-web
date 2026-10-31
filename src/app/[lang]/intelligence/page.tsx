@@ -17,7 +17,7 @@ export default async function IntelligencePage({ params }: { params: Promise<{ l
 
   return (
     <>
-      <PageHeader eyebrow={t.eyebrow} title={t.title} subtitle={t.subtitle} />
+      <PageHeader eyebrow={t.eyebrow} title={t.title} subtitle={t.subtitle} image="intelligence" />
       <CveSection lang={lang} t={t} heading={false} />
       <section className="mx-auto max-w-7xl px-4 pb-24 sm:px-6">
         <SectionHeading align="left" title={t.posts.title} subtitle={t.posts.subtitle} />

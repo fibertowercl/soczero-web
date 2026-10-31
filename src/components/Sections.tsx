@@ -23,11 +23,42 @@ export function SectionHeading({
   );
 }
 
-export function PageHeader({ eyebrow, title, subtitle }: { eyebrow?: string; title: string; subtitle: string }) {
+/* ---------- Fotografías ---------- */
+
+export type PhotoName =
+  | "hero" | "human-training" | "human-phishing" | "human-team" | "process" | "infrastructure"
+  | "offensive" | "detection" | "intelligence" | "resilience" | "operations" | "collage";
+
+/** Ruta de una foto en /public/img/photos (versión -sm de 800px para tarjetas). */
+export function photo(name: PhotoName, sm = false) {
+  return asset(`/img/photos/${name}${sm ? "-sm" : ""}.webp`);
+}
+
+/** Foto de cada línea de servicio */
+export const lineImage: Record<string, PhotoName> = {
+  offensive: "offensive",
+  infrastructure: "infrastructure",
+  detection: "detection",
+  intelligence: "intelligence",
+  human: "human-training",
+  resilience: "resilience",
+};
+
+/** Foto de fondo decorativa con degradado para que el texto se lea. */
+export function BgPhoto({ name, position = "object-center", fade = "bg-gradient-to-b from-ink/75 via-ink/60 to-ink" }: { name: PhotoName; position?: string; fade?: string }) {
+  return (
+    <>
+      <img src={photo(name)} alt="" aria-hidden className={`absolute inset-0 h-full w-full object-cover ${position}`} />
+      <div className={`absolute inset-0 ${fade}`} aria-hidden />
+    </>
+  );
+}
+
+export function PageHeader({ eyebrow, title, subtitle, image }: { eyebrow?: string; title: string; subtitle: string; image?: PhotoName }) {
   return (
     <section className="relative overflow-hidden border-b border-line">
-      <div className="bg-grid absolute inset-0" />
-      <div className="relative mx-auto max-w-7xl px-4 py-20 text-center sm:px-6">
+      {image ? <BgPhoto name={image} /> : <div className="bg-grid absolute inset-0" />}
+      <div className={`relative mx-auto max-w-7xl px-4 text-center sm:px-6 ${image ? "py-24 sm:py-32" : "py-20"}`}>
         {eyebrow && <p className="text-sm font-semibold uppercase tracking-[0.2em] text-brand">{eyebrow}</p>}
         <h1 className="mt-3 font-display text-4xl font-bold tracking-tight sm:text-5xl">{title}</h1>
         <p className="mx-auto mt-4 max-w-2xl text-lg text-muted">{subtitle}</p>
@@ -95,7 +126,12 @@ function ReportPreview({ lang }: { lang: Locale }) {
 export function Hero({ lang, t }: { lang: Locale; t: Dictionary["hero"] }) {
   return (
     <section className="relative overflow-hidden">
-      <div className="bg-grid absolute inset-0" />
+      <BgPhoto
+        name="hero"
+        position="object-[70%_center]"
+        fade="bg-gradient-to-r from-ink via-ink/85 to-ink/40 max-lg:bg-ink/80"
+      />
+      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-ink to-transparent" aria-hidden />
       <div className="relative mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] items-center gap-14 px-4 py-20 sm:px-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:py-28">
         <div>
           <p className="text-sm font-semibold uppercase tracking-[0.25em] text-brand">{t.eyebrow}</p>
@@ -221,8 +257,18 @@ export function ServiceLines({ lang, t, pillars }: { lang: Locale; t: Dictionary
             <Link
               key={l.id}
               href={lineHref(lang, l)}
-              className="group flex flex-col rounded-2xl border border-line bg-panel p-6 transition hover:-translate-y-1 hover:border-brand/60"
+              className="group flex flex-col overflow-hidden rounded-2xl border border-line bg-panel transition hover:-translate-y-1 hover:border-brand/60"
             >
+              <div className="relative h-40 overflow-hidden">
+                <img
+                  src={photo(lineImage[l.id], true)}
+                  alt=""
+                  loading="lazy"
+                  className="h-full w-full object-cover opacity-80 transition duration-500 group-hover:scale-105 group-hover:opacity-100"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-panel via-panel/20 to-transparent" aria-hidden />
+              </div>
+              <div className="relative -mt-6 flex flex-1 flex-col px-6 pb-6">
               <div className="flex items-center justify-between">
                 <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand/10 text-brand">
                   <Icon className="h-6 w-6" />
@@ -245,6 +291,7 @@ export function ServiceLines({ lang, t, pillars }: { lang: Locale; t: Dictionary
               <span className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-brand">
                 {t.explore} <ArrowIcon className="h-4 w-4 transition group-hover:translate-x-1" />
               </span>
+              </div>
             </Link>
           );
         })}
@@ -320,6 +367,10 @@ export function Process({ t }: { t: Dictionary["process"] }) {
   return (
     <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6">
       <SectionHeading eyebrow={t.eyebrow} title={t.title} subtitle={t.subtitle} />
+      <div className="relative mt-12 overflow-hidden rounded-3xl border border-line">
+        <img src={photo("process")} alt="" loading="lazy" className="h-56 w-full object-cover sm:h-72 lg:h-80" />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" aria-hidden />
+      </div>
       <ol className="relative mt-14 grid gap-10 md:grid-cols-4 md:gap-6">
         <div className="absolute left-[12.5%] right-[12.5%] top-7 hidden h-px bg-brand/30 md:block" aria-hidden />
         {t.steps.map((s, i) => (
