@@ -23,10 +23,10 @@ export default function Footer({ lang, t }: { lang: Locale; t: Dictionary }) {
         <div>
           <h3 className="text-sm font-semibold uppercase tracking-wider text-white">{t.nav.services}</h3>
           <ul className="mt-4 space-y-2 text-sm text-muted">
-            {(["soc", "hacking", "noc", "ciso"] as const).map((k) => (
-              <li key={k}>
-                <Link href={`/${lang}/services/#${k}`} className="hover:text-brand">
-                  {t.services.items[k].title}
+            {t.services.core.items.map((s) => (
+              <li key={s.id}>
+                <Link href={`/${lang}/services/#${s.id}`} className="hover:text-brand">
+                  {s.title}
                 </Link>
               </li>
             ))}

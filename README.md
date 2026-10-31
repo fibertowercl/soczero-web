@@ -15,7 +15,7 @@ npm run build      # genera el sitio estático en ./out
 ```
 
 ## Estructura
-- `src/app/[lang]/` — páginas: inicio, `services`, `products`, `contact`
+- `src/app/[lang]/` — páginas: inicio, `services`, `solutions`, `intelligence`, `about`, `contact`
 - `src/app/(root)/` — `/` redirige según el idioma del navegador
 - `src/components/` — header, footer, secciones, formulario
 - `public/img/` — logo y partners
@@ -26,4 +26,6 @@ npm run build      # genera el sitio estático en ./out
 
 ## Pendiente
 - El formulario de contacto abre el cliente de correo (`mailto:`). Hay que conectarlo a un backend o servicio de formularios.
-- Sección SaaS: SOCZERO CVE Alerts (próximamente).
+- SOCZERO CVE Intelligence (en desarrollo) y publicaciones técnicas.
+- Informes de ejemplo (PDF con datos ficticios) para ofrecer en la web.
+- Confirmar con el negocio: cobertura de monitoreo/SLA, oficinas vs. representantes por país, partners, lista de tecnologías.

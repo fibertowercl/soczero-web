@@ -1,6 +1,16 @@
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
-import { CtaBanner, Hero, Intro, Partners, ProductsTeaser, ServicesGrid } from "@/components/Sections";
+import {
+  CoreServices,
+  CtaBanner,
+  CveSection,
+  Hero,
+  Partners,
+  Process,
+  Reports,
+  Solutions,
+  Technologies,
+} from "@/components/Sections";
 
 export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
@@ -9,9 +19,12 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
   return (
     <>
       <Hero lang={lang} t={t.hero} />
-      <Intro t={t.intro} />
-      <ServicesGrid lang={lang} t={t.services} />
-      <ProductsTeaser lang={lang} t={t.products} />
+      <CoreServices lang={lang} t={t.services} />
+      <Solutions lang={lang} t={t.solutions} />
+      <Process t={t.process} />
+      <Reports lang={lang} t={t.reports} />
+      <CveSection lang={lang} t={t.intelligence} />
+      <Technologies t={t.tech} />
       <Partners t={t.partners} />
       <CtaBanner lang={lang} t={t.cta} />
     </>

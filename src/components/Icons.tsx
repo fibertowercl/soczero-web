@@ -1,4 +1,4 @@
-import type { ServiceKey } from "@/i18n/dictionaries";
+import type { IconName } from "@/i18n/dictionaries";
 
 type P = { className?: string };
 const base = {
@@ -115,13 +115,73 @@ export const LinkedInIcon = ({ className }: P) => (
   </svg>
 );
 
-export const serviceIcons: Record<ServiceKey, (p: P) => React.JSX.Element> = {
-  soc: EyeIcon,
-  hacking: TargetIcon,
-  noc: NetworkIcon,
-  awareness: UsersIcon,
-  devsecops: CodeIcon,
-  teams: LayersIcon,
-  ciso: BriefcaseIcon,
-  management: ChartIcon,
+export const SearchIcon = ({ className }: P) => (
+  <svg {...base} className={className}>
+    <circle cx="11" cy="11" r="7" />
+    <path d="M20 20l-4-4M8.5 11h5M11 8.5v5" />
+  </svg>
+);
+
+export const CloudIcon = ({ className }: P) => (
+  <svg {...base} className={className}>
+    <path d="M7 18a4.5 4.5 0 01-.5-9A6 6 0 0118 8.5a4.75 4.75 0 01-.5 9.5H7z" />
+    <path d="M12 11v4M10 13h4" />
+  </svg>
+);
+
+export const SirenIcon = ({ className }: P) => (
+  <svg {...base} className={className}>
+    <path d="M6 18v-5a6 6 0 0112 0v5M4 21h16M12 3V2M4.5 6.5l-1-1M19.5 6.5l1-1" />
+    <path d="M12 11v3" />
+  </svg>
+);
+
+export const RefreshIcon = ({ className }: P) => (
+  <svg {...base} className={className}>
+    <path d="M20 11a8 8 0 00-14.5-4.5L4 8M4 4v4h4M4 13a8 8 0 0014.5 4.5L20 16M20 20v-4h-4" />
+  </svg>
+);
+
+export const BugIcon = ({ className }: P) => (
+  <svg {...base} className={className}>
+    <rect x="7" y="8" width="10" height="12" rx="5" />
+    <path d="M9 8a3 3 0 016 0M12 12v8M3 13h4M17 13h4M4 7l3 2M20 7l-3 2M4 19l3-2M20 19l-3-2" />
+  </svg>
+);
+
+export const GlobeIcon = ({ className }: P) => (
+  <svg {...base} className={className}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z" />
+  </svg>
+);
+
+export const RadarIcon = ({ className }: P) => (
+  <svg {...base} className={className}>
+    <circle cx="12" cy="12" r="9" />
+    <circle cx="12" cy="12" r="5" />
+    <path d="M12 12l6-6" />
+    <circle cx="15.5" cy="14.5" r="1" fill="currentColor" />
+  </svg>
+);
+
+export const FileIcon = ({ className }: P) => (
+  <svg {...base} className={className}>
+    <path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8l-5-5z" />
+    <path d="M14 3v5h5M9 13h6M9 17h4" />
+  </svg>
+);
+
+export const iconMap: Record<IconName, (p: P) => React.JSX.Element> = {
+  search: SearchIcon,
+  cloud: CloudIcon,
+  eye: EyeIcon,
+  siren: SirenIcon,
+  refresh: RefreshIcon,
+  bug: BugIcon,
+  globe: GlobeIcon,
+  radar: RadarIcon,
+  target: TargetIcon,
+  code: CodeIcon,
+  briefcase: BriefcaseIcon,
 };
