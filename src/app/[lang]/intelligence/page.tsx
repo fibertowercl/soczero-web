@@ -9,6 +9,7 @@ import {
   PatchRadarScope,
   PatchRadarSources,
   PatchRadarViews,
+  PhotoBand,
 } from "@/components/PatchRadar";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
@@ -28,8 +29,12 @@ export default async function IntelligencePage({ params }: { params: Promise<{ l
     <>
       <PatchRadarHero lang={lang} t={t} />
       <PatchRadarCapabilities t={t} />
+      <PhotoBand name="detection" />
+      <div className="h-20" />
       <PatchRadarHow t={t} />
       <PatchRadarViews t={t} />
+      <PhotoBand name="offensive" />
+      <div className="h-20" />
       <PatchRadarSources t={t} />
       <PatchRadarScope lang={lang} t={t} />
       <section className="mx-auto max-w-7xl px-4 pb-8 sm:px-6">

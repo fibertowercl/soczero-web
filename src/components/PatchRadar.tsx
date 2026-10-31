@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Locale } from "@/i18n/config";
 import { PATCHRADAR_URL, type Dictionary } from "@/i18n/dictionaries";
 import { ArrowIcon, CheckIcon, ExternalIcon, MailIcon, RadarIcon, SparkIcon, iconMap } from "./Icons";
-import { BgPhoto, sevCls, type Severity } from "./Sections";
+import { BgPhoto, photo, sevCls, type PhotoName, type Severity } from "./Sections";
 
 type T = Dictionary["intelligence"];
 type M = T["mock"];
@@ -146,6 +146,18 @@ export function EmailMock({ m }: { m: M }) {
 }
 
 /* ---------- Secciones ---------- */
+
+/** Franja fotográfica ancha */
+export function PhotoBand({ name }: { name: PhotoName }) {
+  return (
+    <div className="mx-auto max-w-7xl px-4 sm:px-6">
+      <div className="relative overflow-hidden rounded-3xl border border-line">
+        <img src={photo(name)} alt="" loading="lazy" className="h-56 w-full object-cover sm:h-72 lg:h-96" />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-ink/20" aria-hidden />
+      </div>
+    </div>
+  );
+}
 
 function Ctas({ lang, t, className = "" }: { lang: Locale; t: T; className?: string }) {
   return (
