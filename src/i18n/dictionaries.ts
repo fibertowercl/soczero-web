@@ -11,7 +11,12 @@ export type IconName =
   | "radar"
   | "target"
   | "code"
-  | "briefcase";
+  | "briefcase"
+  | "users"
+  | "bell"
+  | "shield";
+
+export type Pillar = "tech" | "people" | "threats";
 
 export type Service = {
   id: string;
@@ -22,6 +27,17 @@ export type Service = {
   note?: string;
 };
 
+export type ServiceLine = {
+  id: string;
+  icon: IconName;
+  name: string;
+  tagline: string;
+  pillar: Pillar;
+  /** Página dedicada (si existe) */
+  page?: "human-security" | "intelligence";
+  items: Service[];
+};
+
 export type Solution = {
   id: string;
   name: string;
@@ -30,6 +46,8 @@ export type Solution = {
   includes: string[];
   featured?: boolean;
 };
+
+export const BLACKMIRA_URL = "https://www.blackmira.com/";
 
 export const contacts = [
   { country: { es: "Chile", en: "Chile" }, phone: "+56 9 7995 8716", email: "contacto@soczero.com" },
@@ -54,14 +72,15 @@ export const technologies = [
 
 const es = {
   meta: {
-    title: "SOCZERO Networks | Evaluación de vulnerabilidades, seguridad en la nube y monitoreo",
+    title: "SOCZERO Networks | Protegemos tu tecnología, preparamos a tus personas y anticipamos las amenazas",
     description:
-      "Ayudamos a empresas a fortalecer la seguridad de sus servidores, redes, aplicaciones y servicios en la nube mediante evaluaciones técnicas, monitoreo y gestión de amenazas.",
+      "Seguridad de infraestructura, pruebas de penetración, monitoreo y respuesta a incidentes, inteligencia de vulnerabilidades y formación en ciberseguridad con BlackMira.",
   },
   nav: {
     home: "Inicio",
     services: "Servicios",
     solutions: "Soluciones",
+    human: "Human Security",
     intelligence: "Security Intelligence",
     about: "Nosotros",
     contact: "Contacto",
@@ -69,116 +88,300 @@ const es = {
   },
   hero: {
     eyebrow: "SOCZERO Networks",
-    lines: ["Identificamos vulnerabilidades.", "Protegemos tu infraestructura.", "Reducimos tus riesgos."],
+    lines: ["Protegemos tu tecnología.", "Preparamos a tus personas.", "Anticipamos las amenazas."],
     subtitle:
-      "Ayudamos a empresas a fortalecer la seguridad de sus servidores, redes, aplicaciones y servicios en la nube mediante evaluaciones técnicas, monitoreo y gestión de amenazas.",
+      "Ayudamos a empresas a fortalecer la seguridad de sus servidores, redes, aplicaciones y servicios en la nube, y a preparar a sus equipos frente a las amenazas digitales.",
     primary: "Solicita una evaluación inicial de seguridad",
     secondary: "Ver servicios",
     highlights: ["Informes con evidencia y recomendaciones", "Proyectos puntuales o contratos mensuales", "Alcance y SLA definidos por escrito"],
   },
+  pillars: {
+    eyebrow: "Un enfoque completo",
+    title: "Tecnología, personas y amenazas",
+    items: [
+      { id: "tech" as Pillar, title: "Tecnología", desc: "Protección de infraestructura, redes y aplicaciones." },
+      { id: "people" as Pillar, title: "Personas", desc: "Formación y reducción del riesgo humano." },
+      { id: "threats" as Pillar, title: "Amenazas", desc: "Inteligencia, detección y respuesta." },
+    ],
+  },
   services: {
-    eyebrow: "Servicios",
-    title: "Qué problema resolvemos y qué recibes",
+    eyebrow: "Líneas de servicio",
+    title: "Seis áreas, un mismo objetivo: reducir tu riesgo",
     subtitle:
       "Cada servicio tiene un alcance claro y un entregable concreto. Puedes contratarlo como proyecto puntual o como servicio recurrente.",
     deliverable: "Entregable",
     quote: "Cotizar",
     viewAll: "Ver todos los servicios",
-    core: {
-      title: "Servicios principales",
-      subtitle: "El punto de partida para la mayoría de las empresas.",
-      items: [
-        {
-          id: "vulnerabilidades",
-          icon: "search",
-          title: "Evaluación de vulnerabilidades",
-          desc: "Revisión de servidores Linux y Windows, sitios web, aplicaciones, puertos expuestos, versiones vulnerables y configuraciones inseguras.",
-          deliverable: "Informe con vulnerabilidades, nivel de riesgo, evidencias y recomendaciones de corrección.",
-        },
-        {
-          id: "nube",
-          icon: "cloud",
-          title: "Seguridad de infraestructura y nube",
-          desc: "Auditorías de Azure, Microsoft 365, Entra ID, redes, VPN, NSG, firewalls, MFA, servidores y controles de acceso.",
-          deliverable: "Diagnóstico de configuración y plan de endurecimiento (hardening).",
-        },
-        {
-          id: "monitoreo",
-          icon: "eye",
-          title: "Monitoreo y detección de amenazas",
-          desc: "Centralización y revisión de logs, eventos de autenticación, intentos de intrusión, tráfico sospechoso y alertas de seguridad.",
-          deliverable: "Alertas, informes periódicos y recomendaciones de respuesta.",
-          note: "Monitoreo gestionado con horario de cobertura y SLA definidos en el contrato.",
-        },
-        {
-          id: "incidentes",
-          icon: "siren",
-          title: "Respuesta a incidentes",
-          desc: "Investigación de actividad sospechosa, revisión de logs, análisis inicial de malware, identificación de indicadores de compromiso y apoyo en contención y recuperación.",
-          deliverable: "Informe técnico del incidente, cronología, hallazgos y medidas correctivas.",
-        },
-        {
-          id: "continuidad",
-          icon: "refresh",
-          title: "Continuidad operativa y recuperación ante desastres",
-          desc: "Planes BCP y DRP, revisión de respaldos, definición de RTO/RPO y pruebas de recuperación. Ideal para pymes con infraestructura pero sin un plan real para recuperarse de un incidente.",
-          deliverable: "Plan documentado y procedimientos de recuperación.",
-        },
-      ] as Service[],
+    explore: "Ver detalle",
+    lines: [
+      {
+        id: "offensive",
+        icon: "target",
+        name: "SOCZERO Offensive Security",
+        tagline: "Evaluaciones de vulnerabilidades y pruebas de penetración autorizadas.",
+        pillar: "tech",
+        items: [
+          {
+            id: "vulnerabilidades",
+            icon: "search",
+            title: "Evaluación de vulnerabilidades",
+            desc: "Revisión de servidores Linux y Windows, sitios web, aplicaciones, puertos expuestos, versiones vulnerables y configuraciones inseguras.",
+            deliverable: "Informe con vulnerabilidades, nivel de riesgo, evidencias y recomendaciones de corrección.",
+          },
+          {
+            id: "pentesting",
+            icon: "target",
+            title: "Pruebas de penetración (Ethical Hacking)",
+            desc: "Pruebas de intrusión manuales y autorizadas sobre aplicaciones e infraestructura. Un pentest profesional va más allá de un escaneo automatizado.",
+            deliverable: "Informe ejecutivo y técnico con hallazgos explotados y re-test de verificación.",
+          },
+          {
+            id: "waf",
+            icon: "globe",
+            title: "Seguridad de aplicaciones web y WAF",
+            desc: "Revisión de reglas WAF, OWASP Top 10, SQL injection, XSS, rate limiting, falsos positivos, logs y protección de aplicaciones públicas.",
+            deliverable: "Diagnóstico de la protección actual y ajustes recomendados de reglas.",
+          },
+        ],
+      },
+      {
+        id: "infrastructure",
+        icon: "cloud",
+        name: "SOCZERO Infrastructure Security",
+        tagline: "Auditorías, hardening, servidores, redes, Azure y Microsoft 365.",
+        pillar: "tech",
+        items: [
+          {
+            id: "nube",
+            icon: "cloud",
+            title: "Seguridad de infraestructura y nube",
+            desc: "Auditorías de Azure, Microsoft 365, Entra ID, redes, VPN, NSG, firewalls, MFA, servidores y controles de acceso.",
+            deliverable: "Diagnóstico de configuración y plan de endurecimiento (hardening).",
+          },
+          {
+            id: "devsecops",
+            icon: "code",
+            title: "DevSecOps",
+            desc: "Integración de controles de seguridad en pipelines CI/CD, revisión de dependencias y buenas prácticas de desarrollo seguro.",
+            deliverable: "Diagnóstico del pipeline y controles implementados.",
+          },
+        ],
+      },
+      {
+        id: "detection",
+        icon: "eye",
+        name: "SOCZERO Detection & Response",
+        tagline: "Monitoreo, detección de amenazas, análisis de logs y respuesta a incidentes.",
+        pillar: "threats",
+        items: [
+          {
+            id: "monitoreo",
+            icon: "eye",
+            title: "Monitoreo y detección de amenazas",
+            desc: "Centralización y revisión de logs, eventos de autenticación, intentos de intrusión, tráfico sospechoso y alertas de seguridad.",
+            deliverable: "Alertas, informes periódicos y recomendaciones de respuesta.",
+            note: "Monitoreo gestionado con horario de cobertura y SLA definidos en el contrato.",
+          },
+          {
+            id: "incidentes",
+            icon: "siren",
+            title: "Respuesta a incidentes",
+            desc: "Investigación de actividad sospechosa, revisión de logs, identificación de indicadores de compromiso y apoyo en contención y recuperación.",
+            deliverable: "Informe técnico del incidente, cronología, hallazgos y medidas correctivas.",
+          },
+          {
+            id: "malware",
+            icon: "bug",
+            title: "Análisis de malware",
+            desc: "Análisis estático y dinámico de archivos sospechosos: comportamiento de procesos, persistencia, modificaciones del registro y comunicaciones de red.",
+            deliverable: "Informe técnico de primer nivel con indicadores de compromiso y recomendaciones.",
+          },
+          {
+            id: "ids",
+            icon: "radar",
+            title: "Detección de intrusiones y honeypots",
+            desc: "Sensores y honeypots, monitoreo con herramientas como Security Onion y Suricata, y análisis de intentos de acceso no autorizado.",
+            deliverable: "Piloto de detección con informe de actividad observada.",
+          },
+        ],
+      },
+      {
+        id: "intelligence",
+        icon: "bell",
+        name: "SOCZERO Security Intelligence",
+        tagline: "Vigilancia de CVE, alertas de vulnerabilidades e inteligencia de amenazas.",
+        pillar: "threats",
+        page: "intelligence",
+        items: [
+          {
+            id: "cve",
+            icon: "bell",
+            title: "Vigilancia de CVE",
+            desc: "Seguimiento diario de las vulnerabilidades publicadas que afectan a las tecnologías que usa tu organización.",
+            deliverable: "Alertas filtradas por tus tecnologías, con severidad y recomendaciones de actualización.",
+          },
+          {
+            id: "threat-intel",
+            icon: "radar",
+            title: "Inteligencia de amenazas",
+            desc: "Información sobre campañas y amenazas activas relevantes para tu sector y tu infraestructura.",
+            deliverable: "Boletines periódicos con recomendaciones accionables.",
+          },
+        ],
+      },
+      {
+        id: "human",
+        icon: "users",
+        name: "SOCZERO Human Security",
+        tagline: "Formación, simulaciones de phishing y evaluación del riesgo humano con BlackMira.",
+        pillar: "people",
+        page: "human-security",
+        items: [
+          {
+            id: "formacion",
+            icon: "users",
+            title: "Formación en ciberseguridad",
+            desc: "Cursos, videos, escenarios interactivos y actividades sobre phishing, contraseñas, protección de datos, ingeniería social y amenazas actuales.",
+            deliverable: "Rutas de formación asignadas y progreso por persona.",
+          },
+          {
+            id: "phishing",
+            icon: "target",
+            title: "Simulaciones de phishing",
+            desc: "Campañas controladas para evaluar cómo reaccionan los colaboradores ante correos fraudulentos y detectar oportunidades de mejora.",
+            deliverable: "Resultados por campaña: interacción, reportes y reincidencia.",
+          },
+          {
+            id: "riesgo-humano",
+            icon: "eye",
+            title: "Evaluación del riesgo humano",
+            desc: "Indicadores por área, seguimiento de interacciones, reportes de phishing y detección de comportamientos recurrentes.",
+            deliverable: "Indicadores de riesgo por área y recomendaciones.",
+          },
+          {
+            id: "evidencias",
+            icon: "shield",
+            title: "Seguimiento y evidencias",
+            desc: "Registro del aprendizaje, constancias de formación, evolución de los participantes e informes para la organización.",
+            deliverable: "Constancias individuales e informes para la gerencia.",
+          },
+        ],
+      },
+      {
+        id: "resilience",
+        icon: "refresh",
+        name: "SOCZERO Resilience",
+        tagline: "Continuidad operativa, respaldos, BCP y recuperación ante desastres.",
+        pillar: "tech",
+        items: [
+          {
+            id: "continuidad",
+            icon: "refresh",
+            title: "Continuidad operativa y recuperación ante desastres",
+            desc: "Planes BCP y DRP, revisión de respaldos, definición de RTO/RPO y pruebas de recuperación. Ideal para pymes con infraestructura pero sin un plan real para recuperarse de un incidente.",
+            deliverable: "Plan documentado y procedimientos de recuperación.",
+          },
+          {
+            id: "ciso",
+            icon: "briefcase",
+            title: "CISO Virtual",
+            desc: "Liderazgo de seguridad de nivel senior a tiempo parcial: estrategia, políticas, cumplimiento y reporte a la dirección.",
+            deliverable: "Hoja de ruta de seguridad y reportes periódicos a la gerencia.",
+          },
+        ],
+      },
+    ] as ServiceLine[],
+  },
+  human: {
+    eyebrow: "SOCZERO Human Security",
+    title: "La seguridad comienza con las personas.",
+    body: "Fortalecemos la cultura de ciberseguridad de tu organización mediante formación continua, simulaciones de phishing y evaluación del riesgo humano. Transformamos los resultados en acciones concretas para reducir los incidentes provocados por errores humanos.",
+    teaser: {
+      title: "Tu tecnología puede estar protegida. ¿Tu equipo también?",
+      body: "Un correo fraudulento puede comprometer una organización incluso cuando existen controles técnicos de seguridad. Prepara a tus colaboradores para reconocer amenazas digitales mediante formación interactiva, simulaciones de phishing y seguimiento continuo de su aprendizaje.",
+      motto: "Capacita. Simula. Evalúa. Mejora.",
+      more: "Conoce Human Security",
     },
-    specialized: {
-      title: "Servicios especializados",
-      subtitle: "Capacidades técnicas para necesidades concretas.",
-      items: [
-        {
-          id: "malware",
-          icon: "bug",
-          title: "Análisis de malware y amenazas",
-          desc: "Análisis estático y dinámico de archivos sospechosos: comportamiento de procesos, persistencia, modificaciones del registro y comunicaciones de red.",
-          deliverable: "Informe técnico de primer nivel con indicadores de compromiso y recomendaciones.",
-        },
-        {
-          id: "waf",
-          icon: "globe",
-          title: "Seguridad de aplicaciones web y WAF",
-          desc: "Revisión de reglas WAF, OWASP Top 10, SQL injection, XSS, rate limiting, falsos positivos, logs y protección de aplicaciones públicas.",
-          deliverable: "Diagnóstico de la protección actual y ajustes recomendados de reglas.",
-        },
-        {
-          id: "ids",
-          icon: "radar",
-          title: "Detección de intrusiones y honeypots",
-          desc: "Implementación de sensores y honeypots, monitoreo con herramientas como Security Onion y Suricata, y análisis de intentos de acceso no autorizado.",
-          deliverable: "Piloto de detección con informe de actividad observada.",
-        },
-      ] as Service[],
+    demo: "Solicitar una demostración",
+    platform: "Con la plataforma",
+    visit: "Visitar blackmira.com",
+    demoNote: "Vista ilustrativa de la plataforma · Datos de demostración",
+    offer: { title: "Qué incluye" },
+    views: {
+      title: "Una plataforma. Dos experiencias conectadas.",
+      subtitle: "Visibilidad para tu organización. Un camino claro para cada persona.",
+      org: {
+        tab: "Para tu organización",
+        title: "Gestiona y acompaña.",
+        desc: "Visualiza el estado de tu organización y enfoca el seguimiento donde más se necesita.",
+        points: ["Avance por área y por persona", "Resultados de cada campaña", "Reportes listos para la gerencia"],
+      },
+      person: {
+        tab: "Para cada persona",
+        title: "Aprende a tu ritmo.",
+        desc: "Cada colaborador ve su ruta de aprendizaje, su progreso y sus próximos pasos.",
+        points: ["Rutas cortas y prácticas", "Progreso y logros visibles", "Constancias descargables"],
+      },
     },
-    advanced: {
-      title: "Servicios complementarios",
-      subtitle: "Con alcance definido según cada proyecto, ejecutados por nuestro equipo o especialistas asociados.",
-      items: [
-        {
-          id: "ethical-hacking",
-          icon: "target",
-          title: "Ethical Hacking / Pentesting",
-          desc: "Pruebas de intrusión manuales sobre aplicaciones e infraestructura. Un pentest profesional va más allá de un escaneo automatizado.",
-          deliverable: "Informe ejecutivo y técnico con hallazgos explotados y re-test de verificación.",
-        },
-        {
-          id: "devsecops",
-          icon: "code",
-          title: "DevSecOps",
-          desc: "Integración de controles de seguridad en pipelines CI/CD, revisión de dependencias y buenas prácticas de desarrollo seguro.",
-          deliverable: "Diagnóstico del pipeline y controles implementados.",
-        },
-        {
-          id: "ciso",
-          icon: "briefcase",
-          title: "CISO Virtual",
-          desc: "Liderazgo de seguridad de nivel senior a tiempo parcial: estrategia, políticas, cumplimiento y reporte a la dirección.",
-          deliverable: "Hoja de ruta de seguridad y reportes periódicos a la gerencia.",
-        },
-      ] as Service[],
+    loop: {
+      title: "Aprender. Practicar. Detectar. Mejorar.",
+      subtitle: "Formación, simulaciones, seguimiento y evidencias conectados en una sola plataforma.",
+      learning: {
+        tag: "Aprendizaje",
+        title: "Aprendizaje que invita a continuar",
+        desc: "Videos, escenarios, actividades interactivas, progreso y logros.",
+        chips: ["Video + escenario + actividad", "Rutas y próximos pasos", "Progreso y logros"],
+        next: "Tu próxima formación",
+        course: "Detecta el phishing",
+        progress: "completado",
+        start: "Comenzar",
+      },
+      sims: {
+        tag: "Simulaciones",
+        title: "Simulaciones con seguimiento",
+        desc: "Entiende cómo interactúa tu equipo con las campañas simuladas y quién las reporta.",
+        caption: "Resultado de una campaña simulada de demostración",
+        results: [
+          { label: "Reincidente", value: 1, tone: "critical" },
+          { label: "Interactuó", value: 2, tone: "high" },
+          { label: "Solo clic", value: 0, tone: "medium" },
+          { label: "Reportó", value: 0, tone: "good" },
+          { label: "No interactuó", value: 9, tone: "neutral" },
+        ],
+      },
+      risk: {
+        tag: "Riesgo humano",
+        title: "Visibilidad del riesgo humano",
+        desc: "Identifica dónde hace falta apoyo y orienta el seguimiento.",
+        caption: "Interacción en simulaciones por área · Datos de demostración",
+        areas: [
+          { label: "Equipo de Finanzas", value: 67 },
+          { label: "Equipo de Operaciones", value: 42 },
+          { label: "Equipo de Tecnología", value: 25 },
+        ],
+      },
+      evidence: {
+        tag: "Evidencias",
+        title: "Evidencias del aprendizaje",
+        desc: "Constancias individuales y registro de las formaciones completadas.",
+        items: ["Deepfakes y suplantación", "Protección de datos", "Detecta el phishing"],
+        done: "Completado",
+        download: "Descargar PDF",
+      },
+    },
+    program: {
+      eyebrow: "Servicio gestionado",
+      title: "SOCZERO Awareness Program",
+      subtitle: "Programa anual de formación y evaluación continua, por cantidad de usuarios. Nosotros lo implementamos y le damos seguimiento.",
+      steps: [
+        "Configuración inicial de la organización y sus usuarios",
+        "Asignación de contenidos de formación",
+        "Campañas periódicas de phishing simulado",
+        "Evaluación de indicadores de riesgo por área",
+        "Informes mensuales y recomendaciones de mejora",
+        "Seguimiento del progreso y constancias de formación",
+      ],
+      cta: "Cotizar el programa",
     },
   },
   solutions: {
@@ -293,7 +496,7 @@ const es = {
   },
   about: {
     title: "Nosotros",
-    subtitle: "Especialistas en ciberseguridad enfocados en resultados verificables.",
+    subtitle: "Protegemos tu tecnología, preparamos a tus personas y anticipamos las amenazas.",
     mission: {
       title: "Nuestra misión",
       body: "Ayudar a empresas de todos los tamaños a reducir su riesgo de ciberseguridad con soluciones prácticas, alcances claros y entregables concretos. Preferimos prometer menos y demostrar más.",
@@ -304,7 +507,7 @@ const es = {
         { title: "Evidencia antes que promesas", desc: "Cada hallazgo viene con evidencia y una recomendación que se puede ejecutar." },
         { title: "Alcance claro", desc: "Sabes qué se revisa, qué se entrega, con qué cobertura y en qué plazo." },
         { title: "Confidencialidad", desc: "Tratamos tu información con acuerdos de confidencialidad y acceso mínimo necesario." },
-        { title: "Seguridad práctica", desc: "Priorizamos lo que más reduce tu riesgo con los recursos que tienes." },
+        { title: "Las personas importan", desc: "La tecnología no basta: preparamos a tu equipo para reconocer y reportar amenazas." },
       ],
     },
     coverage: {
@@ -314,7 +517,7 @@ const es = {
   },
   cta: {
     title: "Empieza con una evaluación inicial",
-    body: "Cuéntanos sobre tu infraestructura y te proponemos un alcance concreto, con entregables y plazos definidos.",
+    body: "Cuéntanos sobre tu infraestructura y tu equipo, y te proponemos un alcance concreto con entregables y plazos definidos.",
     button: "Solicitar evaluación inicial",
   },
   contact: {
@@ -324,6 +527,7 @@ const es = {
     requestTypes: {
       evaluation: "Evaluación inicial de seguridad",
       quote: "Cotización de un servicio o paquete",
+      demo: "Demostración de Human Security (BlackMira)",
       incident: "Tengo un incidente en curso",
       cve: "Acceso anticipado a CVE Intelligence",
       report: "Informe de ejemplo",
@@ -338,7 +542,7 @@ const es = {
     phone: "Teléfono (opcional)",
     company: "Empresa",
     message: "Mensaje",
-    messageHint: "Ej.: cantidad de servidores, uso de Azure / Microsoft 365, sitios web públicos…",
+    messageHint: "Ej.: cantidad de servidores o de colaboradores, uso de Azure / Microsoft 365, sitios web públicos…",
     send: "Enviar solicitud",
     note: "Al enviar se abrirá tu cliente de correo con la solicitud lista.",
     confidential:
@@ -349,7 +553,8 @@ const es = {
   },
   partners: { title: "Algunos de nuestros partners" },
   footer: {
-    tagline: "Evaluación de vulnerabilidades, seguridad en la nube, monitoreo y respuesta a incidentes.",
+    tagline: "Protegemos tu tecnología, preparamos a tus personas y anticipamos las amenazas.",
+    lines: "Líneas de servicio",
     privacy: "Política de privacidad",
     rights: "Todos los derechos reservados.",
   },
@@ -359,14 +564,15 @@ export type Dictionary = typeof es;
 
 const en: Dictionary = {
   meta: {
-    title: "SOCZERO Networks | Vulnerability assessment, cloud security and monitoring",
+    title: "SOCZERO Networks | We protect your technology, prepare your people and anticipate threats",
     description:
-      "We help companies strengthen the security of their servers, networks, applications and cloud services through technical assessments, monitoring and threat management.",
+      "Infrastructure security, penetration testing, monitoring and incident response, vulnerability intelligence and cybersecurity awareness training with BlackMira.",
   },
   nav: {
     home: "Home",
     services: "Services",
     solutions: "Solutions",
+    human: "Human Security",
     intelligence: "Security Intelligence",
     about: "About",
     contact: "Contact",
@@ -374,116 +580,300 @@ const en: Dictionary = {
   },
   hero: {
     eyebrow: "SOCZERO Networks",
-    lines: ["We identify vulnerabilities.", "We protect your infrastructure.", "We reduce your risk."],
+    lines: ["We protect your technology.", "We prepare your people.", "We anticipate threats."],
     subtitle:
-      "We help companies strengthen the security of their servers, networks, applications and cloud services through technical assessments, monitoring and threat management.",
+      "We help companies strengthen the security of their servers, networks, applications and cloud services, and prepare their teams against digital threats.",
     primary: "Request an initial security assessment",
     secondary: "View services",
     highlights: ["Reports with evidence and recommendations", "One-off projects or monthly contracts", "Scope and SLA defined in writing"],
   },
+  pillars: {
+    eyebrow: "A complete approach",
+    title: "Technology, people and threats",
+    items: [
+      { id: "tech", title: "Technology", desc: "Protecting infrastructure, networks and applications." },
+      { id: "people", title: "People", desc: "Training and human-risk reduction." },
+      { id: "threats", title: "Threats", desc: "Intelligence, detection and response." },
+    ],
+  },
   services: {
-    eyebrow: "Services",
-    title: "The problem we solve and what you get",
+    eyebrow: "Service lines",
+    title: "Six areas, one goal: reducing your risk",
     subtitle:
       "Every service has a clear scope and a concrete deliverable. Hire it as a one-off project or as a recurring service.",
     deliverable: "Deliverable",
     quote: "Get a quote",
     viewAll: "View all services",
-    core: {
-      title: "Core services",
-      subtitle: "The starting point for most companies.",
-      items: [
-        {
-          id: "vulnerabilidades",
-          icon: "search",
-          title: "Vulnerability assessment",
-          desc: "Review of Linux and Windows servers, websites, applications, exposed ports, vulnerable versions and insecure configurations.",
-          deliverable: "Report with vulnerabilities, risk level, evidence and remediation recommendations.",
-        },
-        {
-          id: "nube",
-          icon: "cloud",
-          title: "Infrastructure and cloud security",
-          desc: "Audits of Azure, Microsoft 365, Entra ID, networks, VPN, NSG, firewalls, MFA, servers and access controls.",
-          deliverable: "Configuration assessment and hardening plan.",
-        },
-        {
-          id: "monitoreo",
-          icon: "eye",
-          title: "Threat monitoring and detection",
-          desc: "Centralization and review of logs, authentication events, intrusion attempts, suspicious traffic and security alerts.",
-          deliverable: "Alerts, periodic reports and response recommendations.",
-          note: "Managed monitoring with coverage hours and SLA defined in the contract.",
-        },
-        {
-          id: "incidentes",
-          icon: "siren",
-          title: "Incident response",
-          desc: "Investigation of suspicious activity, log review, initial malware analysis, identification of indicators of compromise and support with containment and recovery.",
-          deliverable: "Technical incident report, timeline, findings and corrective actions.",
-        },
-        {
-          id: "continuidad",
-          icon: "refresh",
-          title: "Business continuity and disaster recovery",
-          desc: "BCP and DRP plans, backup review, RTO/RPO definition and recovery testing. Ideal for SMBs that have infrastructure but no real plan to recover from an incident.",
-          deliverable: "Documented plan and recovery procedures.",
-        },
-      ] as Service[],
+    explore: "Learn more",
+    lines: [
+      {
+        id: "offensive",
+        icon: "target",
+        name: "SOCZERO Offensive Security",
+        tagline: "Vulnerability assessments and authorized penetration testing.",
+        pillar: "tech",
+        items: [
+          {
+            id: "vulnerabilidades",
+            icon: "search",
+            title: "Vulnerability assessment",
+            desc: "Review of Linux and Windows servers, websites, applications, exposed ports, vulnerable versions and insecure configurations.",
+            deliverable: "Report with vulnerabilities, risk level, evidence and remediation recommendations.",
+          },
+          {
+            id: "pentesting",
+            icon: "target",
+            title: "Penetration testing (Ethical Hacking)",
+            desc: "Manual, authorized penetration testing of applications and infrastructure. A professional pentest goes beyond an automated scan.",
+            deliverable: "Executive and technical report with exploited findings and verification re-test.",
+          },
+          {
+            id: "waf",
+            icon: "globe",
+            title: "Web application security and WAF",
+            desc: "Review of WAF rules, OWASP Top 10, SQL injection, XSS, rate limiting, false positives, logs and protection of public applications.",
+            deliverable: "Assessment of current protection and recommended rule tuning.",
+          },
+        ],
+      },
+      {
+        id: "infrastructure",
+        icon: "cloud",
+        name: "SOCZERO Infrastructure Security",
+        tagline: "Audits, hardening, servers, networks, Azure and Microsoft 365.",
+        pillar: "tech",
+        items: [
+          {
+            id: "nube",
+            icon: "cloud",
+            title: "Infrastructure and cloud security",
+            desc: "Audits of Azure, Microsoft 365, Entra ID, networks, VPN, NSG, firewalls, MFA, servers and access controls.",
+            deliverable: "Configuration assessment and hardening plan.",
+          },
+          {
+            id: "devsecops",
+            icon: "code",
+            title: "DevSecOps",
+            desc: "Security controls built into CI/CD pipelines, dependency review and secure development practices.",
+            deliverable: "Pipeline assessment and implemented controls.",
+          },
+        ],
+      },
+      {
+        id: "detection",
+        icon: "eye",
+        name: "SOCZERO Detection & Response",
+        tagline: "Monitoring, threat detection, log analysis and incident response.",
+        pillar: "threats",
+        items: [
+          {
+            id: "monitoreo",
+            icon: "eye",
+            title: "Threat monitoring and detection",
+            desc: "Centralization and review of logs, authentication events, intrusion attempts, suspicious traffic and security alerts.",
+            deliverable: "Alerts, periodic reports and response recommendations.",
+            note: "Managed monitoring with coverage hours and SLA defined in the contract.",
+          },
+          {
+            id: "incidentes",
+            icon: "siren",
+            title: "Incident response",
+            desc: "Investigation of suspicious activity, log review, identification of indicators of compromise and support with containment and recovery.",
+            deliverable: "Technical incident report, timeline, findings and corrective actions.",
+          },
+          {
+            id: "malware",
+            icon: "bug",
+            title: "Malware analysis",
+            desc: "Static and dynamic analysis of suspicious files: process behavior, persistence, registry changes and network communications.",
+            deliverable: "First-level technical report with indicators of compromise and recommendations.",
+          },
+          {
+            id: "ids",
+            icon: "radar",
+            title: "Intrusion detection and honeypots",
+            desc: "Sensors and honeypots, monitoring with tools such as Security Onion and Suricata, and analysis of unauthorized access attempts.",
+            deliverable: "Detection pilot with a report of observed activity.",
+          },
+        ],
+      },
+      {
+        id: "intelligence",
+        icon: "bell",
+        name: "SOCZERO Security Intelligence",
+        tagline: "CVE monitoring, vulnerability alerts and threat intelligence.",
+        pillar: "threats",
+        page: "intelligence",
+        items: [
+          {
+            id: "cve",
+            icon: "bell",
+            title: "CVE monitoring",
+            desc: "Daily tracking of newly published vulnerabilities affecting the technologies your organization uses.",
+            deliverable: "Alerts filtered by your technologies, with severity and update recommendations.",
+          },
+          {
+            id: "threat-intel",
+            icon: "radar",
+            title: "Threat intelligence",
+            desc: "Information on active campaigns and threats relevant to your industry and infrastructure.",
+            deliverable: "Periodic bulletins with actionable recommendations.",
+          },
+        ],
+      },
+      {
+        id: "human",
+        icon: "users",
+        name: "SOCZERO Human Security",
+        tagline: "Training, phishing simulations and human-risk assessment with BlackMira.",
+        pillar: "people",
+        page: "human-security",
+        items: [
+          {
+            id: "formacion",
+            icon: "users",
+            title: "Cybersecurity training",
+            desc: "Courses, videos, interactive scenarios and activities on phishing, passwords, data protection, social engineering and current threats.",
+            deliverable: "Assigned learning paths and per-person progress.",
+          },
+          {
+            id: "phishing",
+            icon: "target",
+            title: "Phishing simulations",
+            desc: "Controlled campaigns to assess how employees react to fraudulent emails and find opportunities to improve.",
+            deliverable: "Per-campaign results: interaction, reports and repeat behavior.",
+          },
+          {
+            id: "riesgo-humano",
+            icon: "eye",
+            title: "Human-risk assessment",
+            desc: "Indicators by department, interaction tracking, phishing reports and detection of recurring behavior.",
+            deliverable: "Risk indicators by department and recommendations.",
+          },
+          {
+            id: "evidencias",
+            icon: "shield",
+            title: "Tracking and evidence",
+            desc: "Learning records, training certificates, participant progress and reports for the organization.",
+            deliverable: "Individual certificates and management reports.",
+          },
+        ],
+      },
+      {
+        id: "resilience",
+        icon: "refresh",
+        name: "SOCZERO Resilience",
+        tagline: "Business continuity, backups, BCP and disaster recovery.",
+        pillar: "tech",
+        items: [
+          {
+            id: "continuidad",
+            icon: "refresh",
+            title: "Business continuity and disaster recovery",
+            desc: "BCP and DRP plans, backup review, RTO/RPO definition and recovery testing. Ideal for SMBs that have infrastructure but no real plan to recover from an incident.",
+            deliverable: "Documented plan and recovery procedures.",
+          },
+          {
+            id: "ciso",
+            icon: "briefcase",
+            title: "Virtual CISO",
+            desc: "Part-time senior security leadership: strategy, policies, compliance and management reporting.",
+            deliverable: "Security roadmap and periodic management reports.",
+          },
+        ],
+      },
+    ] as ServiceLine[],
+  },
+  human: {
+    eyebrow: "SOCZERO Human Security",
+    title: "Security starts with people.",
+    body: "We strengthen your organization's cybersecurity culture through continuous training, phishing simulations and human-risk assessment. We turn the results into concrete actions to reduce incidents caused by human error.",
+    teaser: {
+      title: "Your technology may be protected. Is your team?",
+      body: "A single fraudulent email can compromise an organization even when technical security controls are in place. Prepare your employees to recognize digital threats through interactive training, phishing simulations and continuous follow-up of their learning.",
+      motto: "Train. Simulate. Assess. Improve.",
+      more: "Explore Human Security",
     },
-    specialized: {
-      title: "Specialized services",
-      subtitle: "Technical capabilities for specific needs.",
-      items: [
-        {
-          id: "malware",
-          icon: "bug",
-          title: "Malware and threat analysis",
-          desc: "Static and dynamic analysis of suspicious files: process behavior, persistence, registry changes and network communications.",
-          deliverable: "First-level technical report with indicators of compromise and recommendations.",
-        },
-        {
-          id: "waf",
-          icon: "globe",
-          title: "Web application security and WAF",
-          desc: "Review of WAF rules, OWASP Top 10, SQL injection, XSS, rate limiting, false positives, logs and protection of public applications.",
-          deliverable: "Assessment of current protection and recommended rule tuning.",
-        },
-        {
-          id: "ids",
-          icon: "radar",
-          title: "Intrusion detection and honeypots",
-          desc: "Deployment of sensors and honeypots, monitoring with tools such as Security Onion and Suricata, and analysis of unauthorized access attempts.",
-          deliverable: "Detection pilot with a report of observed activity.",
-        },
-      ] as Service[],
+    demo: "Request a demo",
+    platform: "Powered by",
+    visit: "Visit blackmira.com",
+    demoNote: "Illustrative view of the platform · Demo data",
+    offer: { title: "What's included" },
+    views: {
+      title: "One platform. Two connected experiences.",
+      subtitle: "Visibility for your organization. A clear path for every person.",
+      org: {
+        tab: "For your organization",
+        title: "Manage and support.",
+        desc: "See where your organization stands and focus follow-up where it's needed most.",
+        points: ["Progress by department and person", "Results of every campaign", "Management-ready reports"],
+      },
+      person: {
+        tab: "For every person",
+        title: "Learn at your own pace.",
+        desc: "Every employee sees their learning path, progress and next steps.",
+        points: ["Short, practical paths", "Visible progress and achievements", "Downloadable certificates"],
+      },
     },
-    advanced: {
-      title: "Complementary services",
-      subtitle: "Scope defined per project, delivered by our team or partner specialists.",
-      items: [
-        {
-          id: "ethical-hacking",
-          icon: "target",
-          title: "Ethical Hacking / Pentesting",
-          desc: "Manual penetration testing of applications and infrastructure. A professional pentest goes beyond an automated scan.",
-          deliverable: "Executive and technical report with exploited findings and verification re-test.",
-        },
-        {
-          id: "devsecops",
-          icon: "code",
-          title: "DevSecOps",
-          desc: "Security controls built into CI/CD pipelines, dependency review and secure development practices.",
-          deliverable: "Pipeline assessment and implemented controls.",
-        },
-        {
-          id: "ciso",
-          icon: "briefcase",
-          title: "Virtual CISO",
-          desc: "Part-time senior security leadership: strategy, policies, compliance and management reporting.",
-          deliverable: "Security roadmap and periodic management reports.",
-        },
-      ] as Service[],
+    loop: {
+      title: "Learn. Practice. Detect. Improve.",
+      subtitle: "Training, simulations, follow-up and evidence connected in a single platform.",
+      learning: {
+        tag: "Learning",
+        title: "Learning people want to continue",
+        desc: "Videos, scenarios, interactive activities, progress and achievements.",
+        chips: ["Video + scenario + activity", "Paths and next steps", "Progress and achievements"],
+        next: "Your next training",
+        course: "Spot the phish",
+        progress: "complete",
+        start: "Start",
+      },
+      sims: {
+        tag: "Simulations",
+        title: "Simulations with follow-up",
+        desc: "Understand how your team interacts with simulated campaigns and who reports them.",
+        caption: "Result of a demo simulated campaign",
+        results: [
+          { label: "Repeat offender", value: 1, tone: "critical" },
+          { label: "Interacted", value: 2, tone: "high" },
+          { label: "Clicked only", value: 0, tone: "medium" },
+          { label: "Reported", value: 0, tone: "good" },
+          { label: "No interaction", value: 9, tone: "neutral" },
+        ],
+      },
+      risk: {
+        tag: "Human risk",
+        title: "Human-risk visibility",
+        desc: "Identify where support is needed and focus your follow-up.",
+        caption: "Simulation interaction by department · Demo data",
+        areas: [
+          { label: "Finance team", value: 67 },
+          { label: "Operations team", value: 42 },
+          { label: "Technology team", value: 25 },
+        ],
+      },
+      evidence: {
+        tag: "Evidence",
+        title: "Evidence of learning",
+        desc: "Individual certificates and records of completed training.",
+        items: ["Deepfakes and impersonation", "Data protection", "Spot the phish"],
+        done: "Completed",
+        download: "Download PDF",
+      },
+    },
+    program: {
+      eyebrow: "Managed service",
+      title: "SOCZERO Awareness Program",
+      subtitle: "An annual training and continuous assessment program, priced per user. We implement it and handle the follow-up.",
+      steps: [
+        "Initial setup of the organization and its users",
+        "Assignment of training content",
+        "Periodic simulated phishing campaigns",
+        "Assessment of risk indicators by department",
+        "Monthly reports and improvement recommendations",
+        "Progress tracking and training certificates",
+      ],
+      cta: "Get a quote for the program",
     },
   },
   solutions: {
@@ -598,7 +988,7 @@ const en: Dictionary = {
   },
   about: {
     title: "About us",
-    subtitle: "Cybersecurity specialists focused on verifiable results.",
+    subtitle: "We protect your technology, prepare your people and anticipate threats.",
     mission: {
       title: "Our mission",
       body: "Help companies of every size reduce their cybersecurity risk with practical solutions, clear scopes and concrete deliverables. We'd rather promise less and prove more.",
@@ -609,7 +999,7 @@ const en: Dictionary = {
         { title: "Evidence over promises", desc: "Every finding comes with evidence and an actionable recommendation." },
         { title: "Clear scope", desc: "You know what is reviewed, what is delivered, with what coverage and by when." },
         { title: "Confidentiality", desc: "We handle your information under confidentiality agreements and least-privilege access." },
-        { title: "Practical security", desc: "We prioritize what reduces your risk the most with the resources you have." },
+        { title: "People matter", desc: "Technology isn't enough: we prepare your team to recognize and report threats." },
       ],
     },
     coverage: {
@@ -619,7 +1009,7 @@ const en: Dictionary = {
   },
   cta: {
     title: "Start with an initial assessment",
-    body: "Tell us about your infrastructure and we'll propose a concrete scope with defined deliverables and timelines.",
+    body: "Tell us about your infrastructure and your team, and we'll propose a concrete scope with defined deliverables and timelines.",
     button: "Request initial assessment",
   },
   contact: {
@@ -629,6 +1019,7 @@ const en: Dictionary = {
     requestTypes: {
       evaluation: "Initial security assessment",
       quote: "Quote for a service or package",
+      demo: "Human Security demo (BlackMira)",
       incident: "I have an ongoing incident",
       cve: "Early access to CVE Intelligence",
       report: "Sample report",
@@ -643,7 +1034,7 @@ const en: Dictionary = {
     phone: "Phone (optional)",
     company: "Company",
     message: "Message",
-    messageHint: "E.g. number of servers, Azure / Microsoft 365 usage, public websites…",
+    messageHint: "E.g. number of servers or employees, Azure / Microsoft 365 usage, public websites…",
     send: "Send request",
     note: "Submitting will open your email client with the request ready.",
     confidential:
@@ -654,7 +1045,8 @@ const en: Dictionary = {
   },
   partners: { title: "Some of our partners" },
   footer: {
-    tagline: "Vulnerability assessment, cloud security, monitoring and incident response.",
+    tagline: "We protect your technology, prepare your people and anticipate threats.",
+    lines: "Service lines",
     privacy: "Privacy policy",
     rights: "All rights reserved.",
   },

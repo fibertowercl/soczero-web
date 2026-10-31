@@ -11,9 +11,9 @@ export default function Header({ lang, t }: { lang: Locale; t: Dictionary["nav"]
   const [open, setOpen] = useState(false);
 
   const links = [
-    { href: `/${lang}/`, label: t.home },
     { href: `/${lang}/services/`, label: t.services },
     { href: `/${lang}/solutions/`, label: t.solutions },
+    { href: `/${lang}/human-security/`, label: t.human },
     { href: `/${lang}/intelligence/`, label: t.intelligence },
     { href: `/${lang}/about/`, label: t.about },
     { href: `/${lang}/contact/`, label: t.contact },
@@ -31,12 +31,12 @@ export default function Header({ lang, t }: { lang: Locale; t: Dictionary["nav"]
           <img src={asset("/img/logo.png")} alt="SOCZERO Networks" width={171} height={36} className="h-8 w-auto sm:h-9" />
         </Link>
 
-        <nav className="hidden items-center gap-6 lg:flex">
+        <nav className="hidden items-center gap-6 xl:flex">
           {links.map((l) => (
             <Link
               key={l.href}
               href={l.href}
-              className={`text-sm transition-colors hover:text-brand ${
+              className={`whitespace-nowrap text-sm transition-colors hover:text-brand ${
                 current === l.href ? "text-brand" : "text-soft"
               }`}
             >
@@ -45,7 +45,7 @@ export default function Header({ lang, t }: { lang: Locale; t: Dictionary["nav"]
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 lg:flex">
+        <div className="hidden items-center gap-3 xl:flex">
           <Link
             href={switchHref}
             className="rounded-md border border-line px-2.5 py-1 text-xs font-semibold uppercase tracking-wider text-soft hover:border-brand hover:text-brand"
@@ -62,7 +62,7 @@ export default function Header({ lang, t }: { lang: Locale; t: Dictionary["nav"]
         </div>
 
         <button
-          className="rounded-md p-2 text-soft lg:hidden"
+          className="rounded-md p-2 text-soft xl:hidden"
           onClick={() => setOpen((v) => !v)}
           aria-label="Menu"
           aria-expanded={open}
@@ -74,7 +74,7 @@ export default function Header({ lang, t }: { lang: Locale; t: Dictionary["nav"]
       </div>
 
       {open && (
-        <div className="border-t border-line bg-ink px-4 pb-6 pt-2 lg:hidden">
+        <div className="border-t border-line bg-ink px-4 pb-6 pt-2 xl:hidden">
           {links.map((l) => (
             <Link
               key={l.href}

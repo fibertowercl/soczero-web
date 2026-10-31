@@ -19,8 +19,8 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
   const s = t.services;
   const interests = [
     ...t.solutions.items.map((x) => ({ id: x.id, label: x.name })),
-    ...[...s.core.items, ...s.specialized.items, ...s.advanced.items].map((x) => ({ id: x.id, label: x.title })),
-    { id: "cve", label: t.intelligence.product.name },
+    { id: "awareness-program", label: t.human.program.title },
+    ...s.lines.flatMap((l) => l.items.map((x) => ({ id: x.id, label: `${x.title} (${l.name.replace("SOCZERO ", "")})` }))),
   ];
 
   return (

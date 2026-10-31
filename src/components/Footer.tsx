@@ -21,12 +21,12 @@ export default function Footer({ lang, t }: { lang: Locale; t: Dictionary }) {
         </div>
 
         <div>
-          <h3 className="text-sm font-semibold uppercase tracking-wider text-white">{t.nav.services}</h3>
+          <h3 className="text-sm font-semibold uppercase tracking-wider text-white">{t.footer.lines}</h3>
           <ul className="mt-4 space-y-2 text-sm text-muted">
-            {t.services.core.items.map((s) => (
-              <li key={s.id}>
-                <Link href={`/${lang}/services/#${s.id}`} className="hover:text-brand">
-                  {s.title}
+            {t.services.lines.map((l) => (
+              <li key={l.id}>
+                <Link href={l.page ? `/${lang}/${l.page}/` : `/${lang}/services/#${l.id}`} className="hover:text-brand">
+                  {l.name.replace("SOCZERO ", "")}
                 </Link>
               </li>
             ))}

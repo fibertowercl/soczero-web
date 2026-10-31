@@ -184,4 +184,26 @@ export const iconMap: Record<IconName, (p: P) => React.JSX.Element> = {
   target: TargetIcon,
   code: CodeIcon,
   briefcase: BriefcaseIcon,
+  users: UsersIcon,
+  bell: BellIcon,
+  shield: ShieldIcon,
 };
+
+export const ExternalIcon = ({ className }: P) => (
+  <svg {...base} className={className}>
+    <path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1h5" />
+  </svg>
+);
+
+export const DownloadIcon = ({ className }: P) => (
+  <svg {...base} className={className}>
+    <path d="M12 4v11M7 10l5 5 5-5M5 20h14" />
+  </svg>
+);
+
+export const PlayIcon = ({ className }: P) => (
+  <svg {...base} className={className}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M10 8.5l5 3.5-5 3.5v-7z" fill="currentColor" />
+  </svg>
+);

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { asset, type Locale } from "@/i18n/config";
-import { technologies, type Dictionary, type Service, type Solution } from "@/i18n/dictionaries";
+import { technologies, type Dictionary, type IconName, type Pillar, type Service, type ServiceLine, type Solution } from "@/i18n/dictionaries";
 import { ArrowIcon, BellIcon, CheckIcon, FileIcon, SearchIcon, iconMap } from "./Icons";
 
 export function SectionHeading({
@@ -99,7 +99,7 @@ export function Hero({ lang, t }: { lang: Locale; t: Dictionary["hero"] }) {
       <div className="relative mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] items-center gap-14 px-4 py-20 sm:px-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:py-28">
         <div>
           <p className="text-sm font-semibold uppercase tracking-[0.25em] text-brand">{t.eyebrow}</p>
-          <h1 className="mt-5 font-display text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl lg:text-[3.4rem]">
+          <h1 className="mt-5 font-display text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl xl:text-[3.25rem]">
             {t.lines.map((l, i) => (
               <span key={l} className={`block ${i === t.lines.length - 1 ? "text-gradient" : ""}`}>
                 {l}
@@ -179,16 +179,75 @@ export function ServiceCard({
   );
 }
 
-export function CoreServices({ lang, t }: { lang: Locale; t: Dictionary["services"] }) {
+const pillarIcon: Record<Pillar, IconName> = { tech: "shield", people: "users", threats: "radar" };
+
+/** Tecnología · Personas · Amenazas */
+export function Pillars({ t }: { t: Dictionary["pillars"] }) {
+  return (
+    <section className="border-y border-line bg-panel">
+      <div className="mx-auto grid max-w-7xl gap-px px-4 sm:px-6 md:grid-cols-3">
+        {t.items.map((p) => {
+          const Icon = iconMap[pillarIcon[p.id]];
+          return (
+            <div key={p.id} className="flex items-start gap-4 py-8 md:px-6 md:first:pl-0">
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-brand/40 text-brand">
+                <Icon className="h-6 w-6" />
+              </span>
+              <div>
+                <p className="font-display text-xl font-bold">{p.title}</p>
+                <p className="mt-1 text-sm text-muted">{p.desc}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+export function lineHref(lang: Locale, l: ServiceLine) {
+  return l.page ? `/${lang}/${l.page}/` : `/${lang}/services/#${l.id}`;
+}
+
+export function ServiceLines({ lang, t, pillars }: { lang: Locale; t: Dictionary["services"]; pillars: Dictionary["pillars"] }) {
+  const pillarName = Object.fromEntries(pillars.items.map((p) => [p.id, p.title])) as Record<Pillar, string>;
   return (
     <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6">
       <SectionHeading eyebrow={t.eyebrow} title={t.title} subtitle={t.subtitle} />
-      <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-6">
-        {t.core.items.map((s, i) => (
-          <div key={s.id} className={i < 3 ? "lg:col-span-2" : "lg:col-span-3"}>
-            <ServiceCard s={s} lang={lang} t={t} compact />
-          </div>
-        ))}
+      <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {t.lines.map((l) => {
+          const Icon = iconMap[l.icon];
+          return (
+            <Link
+              key={l.id}
+              href={lineHref(lang, l)}
+              className="group flex flex-col rounded-2xl border border-line bg-panel p-6 transition hover:-translate-y-1 hover:border-brand/60"
+            >
+              <div className="flex items-center justify-between">
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand/10 text-brand">
+                  <Icon className="h-6 w-6" />
+                </span>
+                <span className="rounded-full border border-line px-2.5 py-0.5 text-[11px] uppercase tracking-wider text-muted">
+                  {pillarName[l.pillar]}
+                </span>
+              </div>
+              <h3 className="mt-5 font-display text-lg font-semibold">
+                <span className="text-muted">SOCZERO</span> {l.name.replace("SOCZERO ", "")}
+              </h3>
+              <p className="mt-2 text-sm text-muted">{l.tagline}</p>
+              <ul className="mt-4 flex-1 space-y-1.5 text-sm text-soft">
+                {l.items.map((s) => (
+                  <li key={s.id} className="flex gap-2">
+                    <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-brand" /> {s.title}
+                  </li>
+                ))}
+              </ul>
+              <span className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-brand">
+                {t.explore} <ArrowIcon className="h-4 w-4 transition group-hover:translate-x-1" />
+              </span>
+            </Link>
+          );
+        })}
       </div>
       <div className="mt-10 text-center">
         <Link

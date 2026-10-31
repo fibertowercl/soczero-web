@@ -30,6 +30,7 @@ export default function ContactForm({
     const qi = q.get("interest");
     if (qi) setInterest(qi);
     if (qt === "cve") setInterest("cve");
+    if (qt === "demo" && !qi) setInterest("awareness-program");
   }, [t.requestTypes]);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
