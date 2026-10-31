@@ -172,7 +172,18 @@ export const FileIcon = ({ className }: P) => (
   </svg>
 );
 
+export const SparkIcon = ({ className }: P) => (
+  <svg {...base} className={className}>
+    <path d="M12 3l1.8 4.9L19 9.5l-5.2 1.6L12 16l-1.8-4.9L5 9.5l5.2-1.6L12 3z" />
+    <path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z" />
+  </svg>
+);
+
 export const iconMap: Record<IconName, (p: P) => React.JSX.Element> = {
+  layers: LayersIcon,
+  chart: ChartIcon,
+  mail: MailIcon,
+  spark: SparkIcon,
   search: SearchIcon,
   cloud: CloudIcon,
   eye: EyeIcon,

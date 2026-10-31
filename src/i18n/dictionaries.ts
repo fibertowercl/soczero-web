@@ -14,7 +14,11 @@ export type IconName =
   | "briefcase"
   | "users"
   | "bell"
-  | "shield";
+  | "shield"
+  | "layers"
+  | "chart"
+  | "mail"
+  | "spark";
 
 export type Pillar = "tech" | "people" | "threats";
 
@@ -48,6 +52,8 @@ export type Solution = {
 };
 
 export const BLACKMIRA_URL = "https://www.blackmira.com/";
+/** Dirección pública de PatchRadar: aún no definida. Cuando exista, se agrega aquí y aparece el enlace. */
+export const PATCHRADAR_URL: string | null = null;
 
 export const contacts = [
   { country: { es: "Chile", en: "Chile" }, phone: "+56 9 7995 8716", email: "contacto@soczero.com" },
@@ -207,25 +213,25 @@ const es = {
       },
       {
         id: "intelligence",
-        icon: "bell",
-        name: "SOCZERO Inteligencia de Amenazas",
-        tagline: "Vigilancia de CVE, alertas de vulnerabilidades e inteligencia de amenazas.",
+        icon: "radar",
+        name: "SOCZERO Inteligencia de Vulnerabilidades",
+        tagline: "Monitoreo diario de vulnerabilidades publicadas con PatchRadar, análisis y alertas.",
         pillar: "threats",
         page: "intelligence",
         items: [
           {
             id: "cve",
-            icon: "bell",
-            title: "Vigilancia de CVE",
-            desc: "Seguimiento diario de las vulnerabilidades publicadas que afectan a las tecnologías que usa tu organización.",
-            deliverable: "Alertas filtradas por tus tecnologías, con severidad y recomendaciones de actualización.",
+            icon: "radar",
+            title: "Monitoreo diario de vulnerabilidades (PatchRadar)",
+            desc: "Seguimiento diario de las vulnerabilidades publicadas en 18 fuentes oficiales, de fabricantes y medios especializados, consolidadas y clasificadas por severidad.",
+            deliverable: "Panel web y resumen diario por correo con las vulnerabilidades críticas y altas, con análisis y guía de remediación.",
           },
           {
-            id: "threat-intel",
-            icon: "radar",
-            title: "Inteligencia de amenazas",
-            desc: "Información sobre campañas y amenazas activas relevantes para tu sector y tu infraestructura.",
-            deliverable: "Boletines periódicos con recomendaciones accionables.",
+            id: "vuln-advisory",
+            icon: "search",
+            title: "Asesoría de impacto de vulnerabilidades",
+            desc: "Nuestro equipo revisa qué vulnerabilidades publicadas afectan a las tecnologías de tu organización y te ayuda a priorizar las correcciones.",
+            deliverable: "Informe de impacto con prioridades y plan de actualización.",
           },
         ],
       },
@@ -452,35 +458,104 @@ const es = {
     note: "Marcas de sus respectivos dueños. No implica alianza oficial.",
   },
   intelligence: {
-    eyebrow: "SOCZERO Inteligencia de Amenazas",
-    title: "Inteligencia de vulnerabilidades y recursos técnicos",
-    subtitle: "Alertas de CVE relevantes para tus sistemas y publicaciones técnicas sobre vulnerabilidades, endurecimiento y seguridad en la nube.",
-    product: {
-      name: "SOCZERO Alertas CVE",
-      badge: "En desarrollo",
-      desc: "Registra las tecnologías que usas y recibe solo las vulnerabilidades que te afectan, con enlaces a los avisos oficiales, información de explotación conocida y recomendaciones de actualización.",
-      features: [
-        "Alertas diarias por email filtradas por tus tecnologías",
-        "Filtros por fabricante, producto y severidad (CVSS)",
-        "Indicador de explotación conocida",
-        "Panel con el estado de cada vulnerabilidad",
+    eyebrow: "SOCZERO Inteligencia de Vulnerabilidades",
+    tagline: "Aplicación web de inteligencia de vulnerabilidades · por SOCZERO",
+    title: "Las vulnerabilidades no esperan. Tu información tampoco debería.",
+    body: "PatchRadar es nuestra aplicación web de inteligencia de vulnerabilidades. Monitorea diariamente fuentes oficiales y medios especializados en ciberseguridad para identificar nuevas vulnerabilidades, consolidar la información y entregar recomendaciones técnicas de remediación mediante inteligencia artificial. Todo desde un panel centralizado, con un resumen diario por correo electrónico.",
+    status: "Aplicación en funcionamiento · Acceso mediante solicitud",
+    cta: "Solicitar acceso",
+    more: "Conoce PatchRadar",
+    teaser: {
+      title: "Las vulnerabilidades no esperan. Tu información tampoco debería.",
+      body: "Cada día se publican nuevas vulnerabilidades en decenas de sitios. PatchRadar, nuestra aplicación web, las reúne desde 18 fuentes, elimina duplicados, las clasifica por severidad y explica qué hacer, en un panel y en un correo diario.",
+    },
+    capabilities: {
+      title: "Funcionalidades de la aplicación",
+      items: [
+        { icon: "globe" as IconName, title: "18 fuentes monitoreadas", desc: "Organismos oficiales, fabricantes y medios especializados en ciberseguridad." },
+        { icon: "layers" as IconName, title: "Sin duplicados", desc: "Consolida en un solo registro la misma vulnerabilidad publicada por distintas fuentes." },
+        { icon: "chart" as IconName, title: "Clasificación de severidad", desc: "Organizada en niveles crítico, alto, medio y bajo." },
+        { icon: "spark" as IconName, title: "Análisis con IA", desc: "Resúmenes comprensibles y recomendaciones de remediación." },
+        { icon: "eye" as IconName, title: "Panel centralizado", desc: "Consulta de vulnerabilidades con filtros y detalle técnico." },
+        { icon: "mail" as IconName, title: "Alertas diarias", desc: "Resumen por correo de las vulnerabilidades críticas y altas." },
       ],
-      cta: "Quiero acceso anticipado",
-      panel: {
-        title: "Panel de vulnerabilidades",
-        stats: [
-          { value: "12", label: "CVE detectadas" },
-          { value: "3", label: "Críticas" },
-          { value: "5", label: "Pendientes" },
-        ],
-        cols: ["Activo", "Riesgo", "Estado"],
-        rows: [
-          { asset: "Ubuntu Server", risk: "Crítico", level: "critical", status: "Revisar" },
-          { asset: "Apache HTTP Server", risk: "Alto", level: "high", status: "Pendiente" },
-          { asset: "OpenJDK", risk: "Medio", level: "medium", status: "En análisis" },
-        ],
-        disclaimer: "Datos ilustrativos, no corresponden a vulnerabilidades reales detectadas.",
+    },
+    how: {
+      title: "Cómo funciona",
+      subtitle: "Un ciclo automático, todos los días.",
+      steps: [
+        { title: "Recolecta", desc: "Consulta 18 fuentes oficiales, de fabricantes y de noticias." },
+        { title: "Consolida", desc: "Si una vulnerabilidad aparece en varias fuentes, se muestra una sola vez." },
+        { title: "Clasifica", desc: "Asigna severidad crítica, alta, media o baja según CVSS y la fuente." },
+        { title: "Analiza", desc: "La IA genera un resumen claro y una guía de remediación." },
+        { title: "Alerta", desc: "Publica en el panel y envía el resumen diario por correo." },
+      ],
+      early: {
+        title: "Hallazgos antes del CVE",
+        desc: "Si una vulnerabilidad aparece en noticias antes de tener un CVE oficial, PatchRadar la muestra como hallazgo provisional con una evaluación preliminar por IA. Cuando se asigna el CVE, el registro se actualiza automáticamente.",
       },
+    },
+    sources: {
+      title: "Fuentes que monitorea",
+      groups: [
+        { name: "Organismos y bases oficiales", items: ["CISA KEV", "NVD", "Microsoft MSRC", "Ubuntu Security", "Debian Security", "OSV", "EPSS"] },
+        { name: "Fabricantes y proyectos", items: ["Apache HTTPD", "Apache Tomcat", "Apache ActiveMQ", "PHP", "Java / OpenJDK"] },
+        { name: "Medios especializados", items: ["BleepingComputer", "Hacker News (seguridad)", "Krebs on Security", "SecurityWeek", "Security Affairs", "SANS ISC"] },
+      ],
+      note: "PatchRadar consulta información pública. Las marcas pertenecen a sus dueños y no implican alianza.",
+    },
+    mock: {
+      dashTitle: "Vulnerabilidades de hoy",
+      stats: [
+        { value: "3", label: "Críticas", level: "critical" },
+        { value: "9", label: "Altas", level: "high" },
+        { value: "14", label: "Medias", level: "medium" },
+        { value: "6", label: "Bajas", level: "low" },
+      ],
+      filters: ["Todas", "Críticas", "Altas", "Medias", "Bajas"],
+      sources: "fuentes",
+      newsOnly: "📰 Solo noticias",
+      rows: [
+        { level: "critical", sev: "Crítica", id: "CVE-2026-0001", title: "Ejecución remota de código en servidor de aplicaciones", src: 5 },
+        { level: "high", sev: "Alta", id: "CVE-2026-0002", title: "Escalada de privilegios en el kernel de Linux", src: 3 },
+        { level: "high", sev: "Alta", id: "", title: "Omisión de autenticación en equipo VPN", src: 2 },
+        { level: "medium", sev: "Media", id: "CVE-2026-0003", title: "Divulgación de información en intérprete PHP", src: 2 },
+        { level: "low", sev: "Baja", id: "CVE-2026-0004", title: "Denegación de servicio en servidor web", src: 1 },
+      ],
+      detail: {
+        summary: "Resumen IA",
+        summaryText: "Una falla en el procesamiento de solicitudes permite que un atacante remoto, sin autenticarse, ejecute código en el servidor. Afecta especialmente a instalaciones expuestas a Internet.",
+        remediation: "Guía de remediación",
+        steps: [
+          "Actualiza a la versión corregida publicada por el fabricante.",
+          "Si no puedes actualizar de inmediato, restringe el acceso al servicio desde Internet.",
+          "Revisa los registros en busca de solicitudes anómalas.",
+        ],
+      },
+      email: {
+        subject: "PatchRadar · Resumen diario",
+        line: "Hoy: 3 críticas · 9 altas",
+        ai: "Incluye análisis IA de las vulnerabilidades críticas",
+      },
+      disclaimer: "Vista ilustrativa · Datos de demostración",
+    },
+    aiNote: "Las recomendaciones generadas por IA son orientativas. Contrástalas siempre con el aviso oficial del fabricante antes de aplicar cambios.",
+    scope: {
+      title: "Qué es y qué no es",
+      is: { title: "PatchRadar es", items: ["Inteligencia sobre vulnerabilidades publicadas", "Un panel y un resumen diario para mantenerte informado", "Análisis y recomendaciones de remediación"] },
+      isNot: { title: "PatchRadar no es", items: ["Un escáner de tu red o de tus servidores", "Un inventario del software que tienes instalado", "Una plataforma completa de inteligencia de amenazas"] },
+      cross: "¿Necesitas saber qué vulnerabilidades tienen realmente tus sistemas?",
+      crossLink: "Ver evaluación de vulnerabilidades",
+    },
+    roadmap: {
+      title: "En desarrollo",
+      subtitle: "Funciones que estamos preparando, sin fecha comprometida.",
+      items: [
+        "Perfiles por tecnología: recibe solo lo que afecta a tu software",
+        "Priorización con EPSS y CISA KEV (explotación activa)",
+        "Alertas configurables por severidad, tecnología y frecuencia",
+        "Seguimiento de estado: revisada, pendiente o descartada",
+      ],
     },
     posts: {
       title: "Publicaciones técnicas",
@@ -493,6 +568,17 @@ const es = {
         { tag: "Incidentes", title: "Qué revisar en los logs durante las primeras horas de un incidente" },
       ],
     },
+  },
+  ecosystem: {
+    eyebrow: "Servicios y plataformas",
+    title: "Especialistas y plataformas propias, trabajando juntos",
+    subtitle: "Combinamos servicios profesionales con dos plataformas que te mantienen informado y preparan a tu equipo.",
+    more: "Ver más",
+    items: [
+      { id: "services", tag: "Equipo SOCZERO", name: "Servicios profesionales", desc: "Auditorías, seguridad de infraestructura, endurecimiento, monitoreo y respuesta a incidentes.", href: "services" },
+      { id: "patchradar", tag: "Aplicación propia", name: "PatchRadar", desc: "Inteligencia de vulnerabilidades, análisis con IA y alertas diarias.", href: "intelligence" },
+      { id: "blackmira", tag: "Plataforma de formación", name: "BlackMira", desc: "Capacitación continua, simulaciones de phishing, evaluación del riesgo humano y evidencias de aprendizaje.", href: "human-security" },
+    ],
   },
   about: {
     title: "Nosotros",
@@ -529,7 +615,7 @@ const es = {
       quote: "Cotización de un servicio o paquete",
       demo: "Demostración de Concientización (BlackMira)",
       incident: "Tengo un incidente en curso",
-      cve: "Acceso anticipado a Alertas CVE",
+      cve: "Acceso a PatchRadar",
       report: "Informe de ejemplo",
       other: "Otra consulta",
     },
@@ -699,25 +785,25 @@ const en: Dictionary = {
       },
       {
         id: "intelligence",
-        icon: "bell",
-        name: "SOCZERO Threat Intelligence",
-        tagline: "CVE monitoring, vulnerability alerts and threat intelligence.",
+        icon: "radar",
+        name: "SOCZERO Vulnerability Intelligence",
+        tagline: "Daily monitoring of published vulnerabilities with PatchRadar, analysis and alerts.",
         pillar: "threats",
         page: "intelligence",
         items: [
           {
             id: "cve",
-            icon: "bell",
-            title: "CVE monitoring",
-            desc: "Daily tracking of newly published vulnerabilities affecting the technologies your organization uses.",
-            deliverable: "Alerts filtered by your technologies, with severity and update recommendations.",
+            icon: "radar",
+            title: "Daily vulnerability monitoring (PatchRadar)",
+            desc: "Daily tracking of vulnerabilities published across 18 official, vendor and specialized news sources, consolidated and classified by severity.",
+            deliverable: "Web dashboard and a daily email digest of critical and high vulnerabilities, with analysis and remediation guidance.",
           },
           {
-            id: "threat-intel",
-            icon: "radar",
-            title: "Threat intelligence",
-            desc: "Information on active campaigns and threats relevant to your industry and infrastructure.",
-            deliverable: "Periodic bulletins with actionable recommendations.",
+            id: "vuln-advisory",
+            icon: "search",
+            title: "Vulnerability impact advisory",
+            desc: "Our team reviews which published vulnerabilities affect your organization's technologies and helps you prioritize the fixes.",
+            deliverable: "Impact report with priorities and an update plan.",
           },
         ],
       },
@@ -944,35 +1030,104 @@ const en: Dictionary = {
     note: "Trademarks of their respective owners. No official partnership implied.",
   },
   intelligence: {
-    eyebrow: "SOCZERO Threat Intelligence",
-    title: "Vulnerability intelligence and technical resources",
-    subtitle: "CVE alerts relevant to your systems and technical articles on vulnerabilities, hardening and cloud security.",
-    product: {
-      name: "SOCZERO CVE Alerts",
-      badge: "In development",
-      desc: "Register the technologies you use and receive only the vulnerabilities that affect you, with links to official advisories, known-exploitation information and update recommendations.",
-      features: [
-        "Daily email alerts filtered by your technologies",
-        "Vendor, product and severity (CVSS) filters",
-        "Known-exploitation indicator",
-        "Dashboard with the status of each vulnerability",
+    eyebrow: "SOCZERO Vulnerability Intelligence",
+    tagline: "Vulnerability intelligence web app · by SOCZERO",
+    title: "Vulnerabilities don't wait. Neither should your information.",
+    body: "PatchRadar is our vulnerability intelligence web app. It monitors official sources and specialized cybersecurity media every day to identify new vulnerabilities, consolidate the information and deliver technical remediation guidance using artificial intelligence. All from a central dashboard, with a daily email digest.",
+    status: "App in operation · Access on request",
+    cta: "Request access",
+    more: "Explore PatchRadar",
+    teaser: {
+      title: "Vulnerabilities don't wait. Neither should your information.",
+      body: "New vulnerabilities are published every day across dozens of sites. PatchRadar, our web app, gathers them from 18 sources, removes duplicates, classifies them by severity and explains what to do, in a dashboard and a daily email.",
+    },
+    capabilities: {
+      title: "App features",
+      items: [
+        { icon: "globe" as IconName, title: "18 monitored sources", desc: "Official agencies, vendors and specialized cybersecurity media." },
+        { icon: "layers" as IconName, title: "No duplicates", desc: "Consolidates the same vulnerability reported by different sources into one record." },
+        { icon: "chart" as IconName, title: "Severity classification", desc: "Organized into critical, high, medium and low." },
+        { icon: "spark" as IconName, title: "AI analysis", desc: "Plain-language summaries and remediation guidance." },
+        { icon: "eye" as IconName, title: "Central dashboard", desc: "Browse vulnerabilities with filters and technical detail." },
+        { icon: "mail" as IconName, title: "Daily alerts", desc: "Email digest of critical and high vulnerabilities." },
       ],
-      cta: "Request early access",
-      panel: {
-        title: "Vulnerability dashboard",
-        stats: [
-          { value: "12", label: "CVEs detected" },
-          { value: "3", label: "Critical" },
-          { value: "5", label: "Pending" },
-        ],
-        cols: ["Asset", "Risk", "Status"],
-        rows: [
-          { asset: "Ubuntu Server", risk: "Critical", level: "critical", status: "Review" },
-          { asset: "Apache HTTP Server", risk: "High", level: "high", status: "Pending" },
-          { asset: "OpenJDK", risk: "Medium", level: "medium", status: "Analyzing" },
-        ],
-        disclaimer: "Illustrative data; does not reflect real detected vulnerabilities.",
+    },
+    how: {
+      title: "How it works",
+      subtitle: "An automated cycle, every day.",
+      steps: [
+        { title: "Collect", desc: "Queries 18 official, vendor and news sources." },
+        { title: "Consolidate", desc: "If a vulnerability appears in several sources, it is shown only once." },
+        { title: "Classify", desc: "Assigns critical, high, medium or low severity based on CVSS and source." },
+        { title: "Analyze", desc: "AI produces a clear summary and remediation guidance." },
+        { title: "Alert", desc: "Publishes to the dashboard and sends the daily email digest." },
+      ],
+      early: {
+        title: "Findings before the CVE",
+        desc: "If a vulnerability appears in the news before it has an official CVE, PatchRadar shows it as a provisional finding with a preliminary AI assessment. Once the CVE is assigned, the record is updated automatically.",
       },
+    },
+    sources: {
+      title: "Sources it monitors",
+      groups: [
+        { name: "Official agencies and databases", items: ["CISA KEV", "NVD", "Microsoft MSRC", "Ubuntu Security", "Debian Security", "OSV", "EPSS"] },
+        { name: "Vendors and projects", items: ["Apache HTTPD", "Apache Tomcat", "Apache ActiveMQ", "PHP", "Java / OpenJDK"] },
+        { name: "Specialized media", items: ["BleepingComputer", "Hacker News (security)", "Krebs on Security", "SecurityWeek", "Security Affairs", "SANS ISC"] },
+      ],
+      note: "PatchRadar uses public information. Trademarks belong to their owners and do not imply partnership.",
+    },
+    mock: {
+      dashTitle: "Today's vulnerabilities",
+      stats: [
+        { value: "3", label: "Critical", level: "critical" },
+        { value: "9", label: "High", level: "high" },
+        { value: "14", label: "Medium", level: "medium" },
+        { value: "6", label: "Low", level: "low" },
+      ],
+      filters: ["All", "Critical", "High", "Medium", "Low"],
+      sources: "sources",
+      newsOnly: "📰 News only",
+      rows: [
+        { level: "critical", sev: "Critical", id: "CVE-2026-0001", title: "Remote code execution in application server", src: 5 },
+        { level: "high", sev: "High", id: "CVE-2026-0002", title: "Privilege escalation in the Linux kernel", src: 3 },
+        { level: "high", sev: "High", id: "", title: "Authentication bypass in VPN appliance", src: 2 },
+        { level: "medium", sev: "Medium", id: "CVE-2026-0003", title: "Information disclosure in PHP interpreter", src: 2 },
+        { level: "low", sev: "Low", id: "CVE-2026-0004", title: "Denial of service in web server", src: 1 },
+      ],
+      detail: {
+        summary: "AI summary",
+        summaryText: "A flaw in request processing allows an unauthenticated remote attacker to execute code on the server. Internet-facing installations are especially exposed.",
+        remediation: "Remediation guidance",
+        steps: [
+          "Update to the fixed version published by the vendor.",
+          "If you cannot update right away, restrict access to the service from the Internet.",
+          "Review logs for anomalous requests.",
+        ],
+      },
+      email: {
+        subject: "PatchRadar · Daily digest",
+        line: "Today: 3 critical · 9 high",
+        ai: "Includes AI analysis of critical vulnerabilities",
+      },
+      disclaimer: "Illustrative view · Demo data",
+    },
+    aiNote: "AI-generated recommendations are guidance only. Always check them against the vendor's official advisory before making changes.",
+    scope: {
+      title: "What it is and what it isn't",
+      is: { title: "PatchRadar is", items: ["Intelligence on published vulnerabilities", "A dashboard and daily digest to keep you informed", "Analysis and remediation guidance"] },
+      isNot: { title: "PatchRadar is not", items: ["A scanner for your network or servers", "An inventory of your installed software", "A full threat intelligence platform"] },
+      cross: "Need to know which vulnerabilities your systems actually have?",
+      crossLink: "See vulnerability assessment",
+    },
+    roadmap: {
+      title: "In development",
+      subtitle: "Features we're preparing, with no committed date.",
+      items: [
+        "Technology profiles: receive only what affects your software",
+        "Prioritization with EPSS and CISA KEV (active exploitation)",
+        "Alerts configurable by severity, technology and frequency",
+        "Status tracking: reviewed, pending or dismissed",
+      ],
     },
     posts: {
       title: "Technical articles",
@@ -982,9 +1137,20 @@ const en: Dictionary = {
         { tag: "Vulnerabilities", title: "How to check whether your Ubuntu server is affected by a PHP vulnerability" },
         { tag: "Hardening", title: "Checklist for hardening an Internet-facing Linux server" },
         { tag: "Azure", title: "Common Entra ID misconfigurations and how to detect them" },
-        { tag: "Incidents", title: "What to check in your logs during the first hours of an incident" },
+        { tag: "Incidents", title: "What to check in the logs during the first hours of an incident" },
       ],
     },
+  },
+  ecosystem: {
+    eyebrow: "Services and platforms",
+    title: "Specialists and our own platforms, working together",
+    subtitle: "We combine professional services with two platforms that keep you informed and prepare your team.",
+    more: "Learn more",
+    items: [
+      { id: "services", tag: "SOCZERO team", name: "Professional services", desc: "Audits, infrastructure security, hardening, monitoring and incident response.", href: "services" },
+      { id: "patchradar", tag: "Our own app", name: "PatchRadar", desc: "Vulnerability intelligence, AI analysis and daily alerts.", href: "intelligence" },
+      { id: "blackmira", tag: "Training platform", name: "BlackMira", desc: "Continuous training, phishing simulations, human risk assessment and learning evidence.", href: "human-security" },
+    ],
   },
   about: {
     title: "About us",
@@ -1021,7 +1187,7 @@ const en: Dictionary = {
       quote: "Quote for a service or package",
       demo: "Security Awareness demo (BlackMira)",
       incident: "I have an ongoing incident",
-      cve: "Early access to CVE Alerts",
+      cve: "PatchRadar access",
       report: "Sample report",
       other: "Other inquiry",
     },

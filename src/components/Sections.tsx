@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { asset, type Locale } from "@/i18n/config";
 import { technologies, type Dictionary, type IconName, type Pillar, type Service, type ServiceLine, type Solution } from "@/i18n/dictionaries";
-import { ArrowIcon, BellIcon, CheckIcon, FileIcon, SearchIcon, iconMap } from "./Icons";
+import { ArrowIcon, BriefcaseIcon, CheckIcon, FileIcon, RadarIcon, SearchIcon, UsersIcon, iconMap } from "./Icons";
 
 export function SectionHeading({
   eyebrow,
@@ -69,11 +69,13 @@ export function PageHeader({ eyebrow, title, subtitle, image }: { eyebrow?: stri
 
 /* ---------- Hero ---------- */
 
-const sevCls = {
+export const sevCls = {
   critical: "bg-red-500/15 text-red-300 border-red-500/30",
   high: "bg-orange-500/15 text-orange-300 border-orange-500/30",
   medium: "bg-yellow-500/15 text-yellow-200 border-yellow-500/30",
+  low: "bg-sky-500/15 text-sky-300 border-sky-500/30",
 } as const;
+export type Severity = keyof typeof sevCls;
 
 /** Vista previa de hallazgos de un informe: muestra lo que el cliente recibe. */
 function ReportPreview({ lang }: { lang: Locale }) {
@@ -446,85 +448,39 @@ export function Technologies({ t }: { t: Dictionary["tech"] }) {
   );
 }
 
-/* ---------- CVE Intelligence ---------- */
+/* ---------- Servicios y plataformas ---------- */
 
-export function CvePanel({ p }: { p: Dictionary["intelligence"]["product"]["panel"] }) {
+export function Ecosystem({ lang, t }: { lang: Locale; t: Dictionary["ecosystem"] }) {
+  const icons = { services: BriefcaseIcon, patchradar: RadarIcon, blackmira: UsersIcon } as const;
   return (
-    <figure className="rounded-2xl border border-line bg-ink/70 p-5">
-      <figcaption className="flex items-center justify-between">
-        <span className="text-sm font-semibold">{p.title}</span>
-        <span className="flex gap-1.5" aria-hidden>
-          <span className="h-2.5 w-2.5 rounded-full bg-line" />
-          <span className="h-2.5 w-2.5 rounded-full bg-line" />
-          <span className="h-2.5 w-2.5 rounded-full bg-brand/70" />
-        </span>
-      </figcaption>
-      <div className="mt-4 grid grid-cols-3 gap-3">
-        {p.stats.map((s, i) => (
-          <div key={s.label} className="rounded-xl border border-line bg-panel p-3">
-            <p className={`font-display text-2xl font-bold ${i === 1 ? "text-red-300" : "text-brand"}`}>{s.value}</p>
-            <p className="text-xs text-muted">{s.label}</p>
-          </div>
-        ))}
-      </div>
-      <table className="mt-4 w-full text-left text-sm">
-        <thead>
-          <tr className="text-xs uppercase tracking-wider text-muted">
-            {p.cols.map((c) => (
-              <th key={c} className="pb-2 font-medium">
-                {c}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {p.rows.map((r) => (
-            <tr key={r.asset} className="border-t border-line">
-              <td className="py-2.5 pr-2 text-soft">{r.asset}</td>
-              <td className="py-2.5 pr-2">
-                <span className={`rounded border px-1.5 py-0.5 text-xs font-semibold ${sevCls[r.level as keyof typeof sevCls]}`}>
-                  {r.risk}
+    <section className="border-y border-line bg-panel/40">
+      <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6">
+        <SectionHeading eyebrow={t.eyebrow} title={t.title} subtitle={t.subtitle} />
+        <div className="mt-14 grid gap-5 md:grid-cols-3">
+          {t.items.map((x) => {
+            const Icon = icons[x.id as keyof typeof icons];
+            return (
+              <Link
+                key={x.id}
+                href={`/${lang}/${x.href}/`}
+                className="group flex flex-col rounded-2xl border border-line bg-panel p-6 transition hover:-translate-y-1 hover:border-brand/60"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand/10 text-brand">
+                    <Icon className="h-6 w-6" />
+                  </span>
+                  <span className="rounded-full border border-line px-2.5 py-0.5 text-[11px] uppercase tracking-wider text-muted">
+                    {x.tag}
+                  </span>
+                </div>
+                <h3 className="mt-5 font-display text-xl font-bold">{x.name}</h3>
+                <p className="mt-2 flex-1 text-sm text-muted">{x.desc}</p>
+                <span className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-brand">
+                  {t.more} <ArrowIcon className="h-4 w-4 transition group-hover:translate-x-1" />
                 </span>
-              </td>
-              <td className="py-2.5 text-muted">{r.status}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <p className="mt-3 text-[11px] italic text-muted">{p.disclaimer}</p>
-    </figure>
-  );
-}
-
-export function CveSection({ lang, t, heading = true }: { lang: Locale; t: Dictionary["intelligence"]; heading?: boolean }) {
-  const p = t.product;
-  return (
-    <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6">
-      <div className="relative overflow-hidden rounded-3xl border border-line bg-panel p-6 sm:p-12">
-        <div className="glow absolute -right-40 -top-40 h-[28rem] w-[28rem]" />
-        <div className="relative grid gap-10 lg:grid-cols-2 lg:items-center">
-          <div>
-            {heading && <p className="text-sm font-semibold uppercase tracking-[0.2em] text-brand">{t.eyebrow}</p>}
-            <div className="mt-3 flex flex-wrap items-center gap-3">
-              <h2 className="font-display text-3xl font-bold tracking-tight">{p.name}</h2>
-              <span className="rounded-full border border-brand/40 px-3 py-1 text-xs font-medium text-brand">{p.badge}</span>
-            </div>
-            <p className="mt-4 text-muted">{p.desc}</p>
-            <ul className="mt-6 space-y-2.5 text-sm text-soft">
-              {p.features.map((f) => (
-                <li key={f} className="flex gap-2">
-                  <BellIcon className="mt-0.5 h-4 w-4 shrink-0 text-brand" /> {f}
-                </li>
-              ))}
-            </ul>
-            <Link
-              href={`/${lang}/contact/?type=cve`}
-              className="mt-8 inline-flex items-center gap-2 rounded-lg bg-brand px-5 py-3 font-semibold text-ink transition hover:bg-brand-dim"
-            >
-              {p.cta} <ArrowIcon className="h-4 w-4" />
-            </Link>
-          </div>
-          <CvePanel p={p.panel} />
+              </Link>
+            );
+          })}
         </div>
       </div>
     </section>

@@ -1,25 +1,38 @@
 import type { Metadata } from "next";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
-import { CveSection, PageHeader, SectionHeading } from "@/components/Sections";
+import { CtaBanner, SectionHeading } from "@/components/Sections";
+import {
+  PatchRadarCapabilities,
+  PatchRadarHero,
+  PatchRadarHow,
+  PatchRadarScope,
+  PatchRadarSources,
+  PatchRadarViews,
+} from "@/components/PatchRadar";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
   if (!isLocale(lang)) return {};
-  const t = getDictionary(lang);
-  return { title: `${t.nav.intelligence} | SOCZERO Networks` };
+  const t = getDictionary(lang).intelligence;
+  return { title: `PatchRadar | ${t.eyebrow}`, description: t.body };
 }
 
 export default async function IntelligencePage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   if (!isLocale(lang)) return null;
-  const t = getDictionary(lang).intelligence;
+  const d = getDictionary(lang);
+  const t = d.intelligence;
 
   return (
     <>
-      <PageHeader eyebrow={t.eyebrow} title={t.title} subtitle={t.subtitle} image="intelligence" />
-      <CveSection lang={lang} t={t} heading={false} />
-      <section className="mx-auto max-w-7xl px-4 pb-24 sm:px-6">
+      <PatchRadarHero lang={lang} t={t} />
+      <PatchRadarCapabilities t={t} />
+      <PatchRadarHow t={t} />
+      <PatchRadarViews t={t} />
+      <PatchRadarSources t={t} />
+      <PatchRadarScope lang={lang} t={t} />
+      <section className="mx-auto max-w-7xl px-4 pb-8 sm:px-6">
         <SectionHeading align="left" title={t.posts.title} subtitle={t.posts.subtitle} />
         <div className="mt-10 grid gap-5 md:grid-cols-2">
           {t.posts.topics.map((p) => (
@@ -33,6 +46,7 @@ export default async function IntelligencePage({ params }: { params: Promise<{ l
           ))}
         </div>
       </section>
+      <CtaBanner lang={lang} t={d.cta} />
     </>
   );
 }
