@@ -80,8 +80,8 @@ const es = {
     home: "Inicio",
     services: "Servicios",
     solutions: "Soluciones",
-    human: "Human Security",
-    intelligence: "Security Intelligence",
+    human: "Concientización",
+    intelligence: "Inteligencia",
     about: "Nosotros",
     contact: "Contacto",
     cta: "Evaluación inicial",
@@ -93,7 +93,7 @@ const es = {
       "Ayudamos a empresas a fortalecer la seguridad de sus servidores, redes, aplicaciones y servicios en la nube, y a preparar a sus equipos frente a las amenazas digitales.",
     primary: "Solicita una evaluación inicial de seguridad",
     secondary: "Ver servicios",
-    highlights: ["Informes con evidencia y recomendaciones", "Proyectos puntuales o contratos mensuales", "Alcance y SLA definidos por escrito"],
+    highlights: ["Informes con evidencia y recomendaciones", "Proyectos puntuales o contratos mensuales", "Alcance y niveles de servicio definidos por escrito"],
   },
   pillars: {
     eyebrow: "Un enfoque completo",
@@ -117,7 +117,7 @@ const es = {
       {
         id: "offensive",
         icon: "target",
-        name: "SOCZERO Offensive Security",
+        name: "SOCZERO Seguridad Ofensiva",
         tagline: "Evaluaciones de vulnerabilidades y pruebas de penetración autorizadas.",
         pillar: "tech",
         items: [
@@ -131,15 +131,15 @@ const es = {
           {
             id: "pentesting",
             icon: "target",
-            title: "Pruebas de penetración (Ethical Hacking)",
+            title: "Pruebas de penetración (hacking ético)",
             desc: "Pruebas de intrusión manuales y autorizadas sobre aplicaciones e infraestructura. Un pentest profesional va más allá de un escaneo automatizado.",
             deliverable: "Informe ejecutivo y técnico con hallazgos explotados y re-test de verificación.",
           },
           {
             id: "waf",
             icon: "globe",
-            title: "Seguridad de aplicaciones web y WAF",
-            desc: "Revisión de reglas WAF, OWASP Top 10, SQL injection, XSS, rate limiting, falsos positivos, logs y protección de aplicaciones públicas.",
+            title: "Seguridad de aplicaciones web y firewall de aplicaciones (WAF)",
+            desc: "Revisión de reglas WAF, OWASP Top 10, SQL injection, XSS, límites de solicitudes, falsos positivos, logs y protección de aplicaciones públicas.",
             deliverable: "Diagnóstico de la protección actual y ajustes recomendados de reglas.",
           },
         ],
@@ -147,8 +147,8 @@ const es = {
       {
         id: "infrastructure",
         icon: "cloud",
-        name: "SOCZERO Infrastructure Security",
-        tagline: "Auditorías, hardening, servidores, redes, Azure y Microsoft 365.",
+        name: "SOCZERO Seguridad de Infraestructura",
+        tagline: "Auditorías, endurecimiento, servidores, redes, Azure y Microsoft 365.",
         pillar: "tech",
         items: [
           {
@@ -156,12 +156,12 @@ const es = {
             icon: "cloud",
             title: "Seguridad de infraestructura y nube",
             desc: "Auditorías de Azure, Microsoft 365, Entra ID, redes, VPN, NSG, firewalls, MFA, servidores y controles de acceso.",
-            deliverable: "Diagnóstico de configuración y plan de endurecimiento (hardening).",
+            deliverable: "Diagnóstico de configuración y plan de endurecimiento.",
           },
           {
             id: "devsecops",
             icon: "code",
-            title: "DevSecOps",
+            title: "Seguridad en el desarrollo (DevSecOps)",
             desc: "Integración de controles de seguridad en pipelines CI/CD, revisión de dependencias y buenas prácticas de desarrollo seguro.",
             deliverable: "Diagnóstico del pipeline y controles implementados.",
           },
@@ -170,7 +170,7 @@ const es = {
       {
         id: "detection",
         icon: "eye",
-        name: "SOCZERO Detection & Response",
+        name: "SOCZERO Detección y Respuesta",
         tagline: "Monitoreo, detección de amenazas, análisis de logs y respuesta a incidentes.",
         pillar: "threats",
         items: [
@@ -180,7 +180,7 @@ const es = {
             title: "Monitoreo y detección de amenazas",
             desc: "Centralización y revisión de logs, eventos de autenticación, intentos de intrusión, tráfico sospechoso y alertas de seguridad.",
             deliverable: "Alertas, informes periódicos y recomendaciones de respuesta.",
-            note: "Monitoreo gestionado con horario de cobertura y SLA definidos en el contrato.",
+            note: "Monitoreo gestionado con horario de cobertura y niveles de servicio definidos en el contrato.",
           },
           {
             id: "incidentes",
@@ -199,8 +199,8 @@ const es = {
           {
             id: "ids",
             icon: "radar",
-            title: "Detección de intrusiones y honeypots",
-            desc: "Sensores y honeypots, monitoreo con herramientas como Security Onion y Suricata, y análisis de intentos de acceso no autorizado.",
+            title: "Detección de intrusiones y señuelos (honeypots)",
+            desc: "Sensores y señuelos, monitoreo con herramientas como Security Onion y Suricata, y análisis de intentos de acceso no autorizado.",
             deliverable: "Piloto de detección con informe de actividad observada.",
           },
         ],
@@ -208,7 +208,7 @@ const es = {
       {
         id: "intelligence",
         icon: "bell",
-        name: "SOCZERO Security Intelligence",
+        name: "SOCZERO Inteligencia de Amenazas",
         tagline: "Vigilancia de CVE, alertas de vulnerabilidades e inteligencia de amenazas.",
         pillar: "threats",
         page: "intelligence",
@@ -232,7 +232,7 @@ const es = {
       {
         id: "human",
         icon: "users",
-        name: "SOCZERO Human Security",
+        name: "SOCZERO Concientización",
         tagline: "Formación, simulaciones de phishing y evaluación del riesgo humano con BlackMira.",
         pillar: "people",
         page: "human-security",
@@ -270,7 +270,7 @@ const es = {
       {
         id: "resilience",
         icon: "refresh",
-        name: "SOCZERO Resilience",
+        name: "SOCZERO Resiliencia",
         tagline: "Continuidad operativa, respaldos, BCP y recuperación ante desastres.",
         pillar: "tech",
         items: [
@@ -293,14 +293,14 @@ const es = {
     ] as ServiceLine[],
   },
   human: {
-    eyebrow: "SOCZERO Human Security",
+    eyebrow: "SOCZERO Concientización",
     title: "La seguridad comienza con las personas.",
     body: "Fortalecemos la cultura de ciberseguridad de tu organización mediante formación continua, simulaciones de phishing y evaluación del riesgo humano. Transformamos los resultados en acciones concretas para reducir los incidentes provocados por errores humanos.",
     teaser: {
       title: "Tu tecnología puede estar protegida. ¿Tu equipo también?",
       body: "Un correo fraudulento puede comprometer una organización incluso cuando existen controles técnicos de seguridad. Prepara a tus colaboradores para reconocer amenazas digitales mediante formación interactiva, simulaciones de phishing y seguimiento continuo de su aprendizaje.",
       motto: "Capacita. Simula. Evalúa. Mejora.",
-      more: "Conoce Human Security",
+      more: "Conoce el servicio",
     },
     demo: "Solicitar una demostración",
     platform: "Con la plataforma",
@@ -371,7 +371,7 @@ const es = {
     },
     program: {
       eyebrow: "Servicio gestionado",
-      title: "SOCZERO Awareness Program",
+      title: "Programa de Concientización SOCZERO",
       subtitle: "Programa anual de formación y evaluación continua, por cantidad de usuarios. Nosotros lo implementamos y le damos seguimiento.",
       steps: [
         "Configuración inicial de la organización y sus usuarios",
@@ -394,14 +394,14 @@ const es = {
     items: [
       {
         id: "essential",
-        name: "SOCZERO Essential",
+        name: "SOCZERO Esencial",
         audience: "Para pequeñas empresas",
         desc: "El primer paso para saber dónde estás y qué corregir primero.",
         includes: ["Diagnóstico inicial de seguridad", "Revisión de vulnerabilidades", "Revisión de MFA y accesos", "Revisión de respaldos", "Informe con recomendaciones priorizadas"],
       },
       {
         id: "protect",
-        name: "SOCZERO Protect",
+        name: "SOCZERO Protección",
         audience: "Protección recurrente",
         desc: "Seguimiento continuo para que la seguridad no se quede en una auditoría.",
         includes: ["Evaluaciones periódicas de vulnerabilidades", "Seguimiento de CVE de tus tecnologías", "Revisión de configuraciones", "Reporte mensual"],
@@ -409,17 +409,17 @@ const es = {
       },
       {
         id: "monitor",
-        name: "SOCZERO Monitor",
+        name: "SOCZERO Monitoreo",
         audience: "Detección gestionada",
         desc: "Visibilidad sobre lo que ocurre en tus sistemas y escalamiento cuando importa.",
-        includes: ["Recopilación centralizada de logs", "Reglas de detección", "Alertas y escalamiento", "Cobertura y SLA según contrato"],
+        includes: ["Recopilación centralizada de logs", "Reglas de detección", "Alertas y escalamiento", "Cobertura y niveles de servicio según contrato"],
       },
       {
         id: "cloud",
-        name: "SOCZERO Cloud",
+        name: "SOCZERO Nube",
         audience: "Infraestructura y nube",
         desc: "Auditoría enfocada en tu entorno Microsoft y tu infraestructura.",
-        includes: ["Auditoría de Azure y Microsoft 365", "Identidades y Entra ID", "Redes, NSG y firewalls", "Servidores y controles de acceso", "Plan de hardening"],
+        includes: ["Auditoría de Azure y Microsoft 365", "Identidades y Entra ID", "Redes, NSG y firewalls", "Servidores y controles de acceso", "Plan de endurecimiento"],
       },
     ] as Solution[],
   },
@@ -443,7 +443,7 @@ const es = {
     items: [
       { title: "Evaluación de vulnerabilidades", sections: ["Resumen ejecutivo", "Activos evaluados", "Hallazgos por severidad", "Evidencias", "Plan de corrección"] },
       { title: "Incidentes y análisis de logs", sections: ["Resumen del incidente", "Cronología", "Indicadores de compromiso", "Impacto", "Medidas correctivas"] },
-      { title: "Auditoría de seguridad Azure", sections: ["Resumen ejecutivo", "Identidades y MFA", "Redes y NSG", "Configuración de recursos", "Plan de hardening"] },
+      { title: "Auditoría de seguridad Azure", sections: ["Resumen ejecutivo", "Identidades y MFA", "Redes y NSG", "Configuración de recursos", "Plan de endurecimiento"] },
     ],
   },
   tech: {
@@ -452,11 +452,11 @@ const es = {
     note: "Marcas de sus respectivos dueños. No implica alianza oficial.",
   },
   intelligence: {
-    eyebrow: "SOCZERO Security Intelligence",
+    eyebrow: "SOCZERO Inteligencia de Amenazas",
     title: "Inteligencia de vulnerabilidades y recursos técnicos",
-    subtitle: "Alertas de CVE relevantes para tus sistemas y publicaciones técnicas sobre vulnerabilidades, hardening y seguridad en la nube.",
+    subtitle: "Alertas de CVE relevantes para tus sistemas y publicaciones técnicas sobre vulnerabilidades, endurecimiento y seguridad en la nube.",
     product: {
-      name: "SOCZERO CVE Intelligence",
+      name: "SOCZERO Alertas CVE",
       badge: "En desarrollo",
       desc: "Registra las tecnologías que usas y recibe solo las vulnerabilidades que te afectan, con enlaces a los avisos oficiales, información de explotación conocida y recomendaciones de actualización.",
       features: [
@@ -488,7 +488,7 @@ const es = {
       soon: "Próximamente",
       topics: [
         { tag: "Vulnerabilidades", title: "Cómo verificar si tu servidor Ubuntu está afectado por una vulnerabilidad de PHP" },
-        { tag: "Hardening", title: "Lista de verificación para endurecer un servidor Linux expuesto a Internet" },
+        { tag: "Endurecimiento", title: "Lista de verificación para endurecer un servidor Linux expuesto a Internet" },
         { tag: "Azure", title: "Errores comunes de configuración en Entra ID y cómo detectarlos" },
         { tag: "Incidentes", title: "Qué revisar en los logs durante las primeras horas de un incidente" },
       ],
@@ -527,9 +527,9 @@ const es = {
     requestTypes: {
       evaluation: "Evaluación inicial de seguridad",
       quote: "Cotización de un servicio o paquete",
-      demo: "Demostración de Human Security (BlackMira)",
+      demo: "Demostración de Concientización (BlackMira)",
       incident: "Tengo un incidente en curso",
-      cve: "Acceso anticipado a CVE Intelligence",
+      cve: "Acceso anticipado a Alertas CVE",
       report: "Informe de ejemplo",
       other: "Otra consulta",
     },
@@ -551,7 +551,7 @@ const es = {
     incidentBody: "Llámanos directamente para una respuesta más rápida.",
     offices: "Contacto por país",
   },
-  partners: { title: "Algunos de nuestros partners" },
+  partners: { title: "Algunos de nuestros aliados" },
   footer: {
     tagline: "Protegemos tu tecnología, preparamos a tus personas y anticipamos las amenazas.",
     lines: "Líneas de servicio",
@@ -572,8 +572,8 @@ const en: Dictionary = {
     home: "Home",
     services: "Services",
     solutions: "Solutions",
-    human: "Human Security",
-    intelligence: "Security Intelligence",
+    human: "Awareness",
+    intelligence: "Intelligence",
     about: "About",
     contact: "Contact",
     cta: "Initial assessment",
@@ -700,7 +700,7 @@ const en: Dictionary = {
       {
         id: "intelligence",
         icon: "bell",
-        name: "SOCZERO Security Intelligence",
+        name: "SOCZERO Threat Intelligence",
         tagline: "CVE monitoring, vulnerability alerts and threat intelligence.",
         pillar: "threats",
         page: "intelligence",
@@ -724,7 +724,7 @@ const en: Dictionary = {
       {
         id: "human",
         icon: "users",
-        name: "SOCZERO Human Security",
+        name: "SOCZERO Security Awareness",
         tagline: "Training, phishing simulations and human-risk assessment with BlackMira.",
         pillar: "people",
         page: "human-security",
@@ -785,14 +785,14 @@ const en: Dictionary = {
     ] as ServiceLine[],
   },
   human: {
-    eyebrow: "SOCZERO Human Security",
+    eyebrow: "SOCZERO Security Awareness",
     title: "Security starts with people.",
     body: "We strengthen your organization's cybersecurity culture through continuous training, phishing simulations and human-risk assessment. We turn the results into concrete actions to reduce incidents caused by human error.",
     teaser: {
       title: "Your technology may be protected. Is your team?",
       body: "A single fraudulent email can compromise an organization even when technical security controls are in place. Prepare your employees to recognize digital threats through interactive training, phishing simulations and continuous follow-up of their learning.",
       motto: "Train. Simulate. Assess. Improve.",
-      more: "Explore Human Security",
+      more: "Explore the service",
     },
     demo: "Request a demo",
     platform: "Powered by",
@@ -944,11 +944,11 @@ const en: Dictionary = {
     note: "Trademarks of their respective owners. No official partnership implied.",
   },
   intelligence: {
-    eyebrow: "SOCZERO Security Intelligence",
+    eyebrow: "SOCZERO Threat Intelligence",
     title: "Vulnerability intelligence and technical resources",
     subtitle: "CVE alerts relevant to your systems and technical articles on vulnerabilities, hardening and cloud security.",
     product: {
-      name: "SOCZERO CVE Intelligence",
+      name: "SOCZERO CVE Alerts",
       badge: "In development",
       desc: "Register the technologies you use and receive only the vulnerabilities that affect you, with links to official advisories, known-exploitation information and update recommendations.",
       features: [
@@ -1019,9 +1019,9 @@ const en: Dictionary = {
     requestTypes: {
       evaluation: "Initial security assessment",
       quote: "Quote for a service or package",
-      demo: "Human Security demo (BlackMira)",
+      demo: "Security Awareness demo (BlackMira)",
       incident: "I have an ongoing incident",
-      cve: "Early access to CVE Intelligence",
+      cve: "Early access to CVE Alerts",
       report: "Sample report",
       other: "Other inquiry",
     },

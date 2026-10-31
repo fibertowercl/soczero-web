@@ -94,11 +94,11 @@ function ReportPreview({ lang }: { lang: Locale }) {
               <SearchIcon className="h-5 w-5" />
             </span>
             <div>
-              <p className="text-sm font-semibold">Security Assessment</p>
+              <p className="text-sm font-semibold">{es ? "Evaluación de seguridad" : "Security Assessment"}</p>
               <p className="text-xs text-muted">srv-web-01 · 10.0.4.12</p>
             </div>
           </div>
-          <span className="rounded-full border border-brand/40 px-2.5 py-0.5 text-[11px] font-medium text-brand">Demo</span>
+          <span className="rounded-full border border-brand/40 px-2.5 py-0.5 text-[11px] font-medium text-brand">{es ? "Ejemplo" : "Demo"}</span>
         </div>
         <ul className="mt-4 space-y-2.5">
           {rows.map((r) => (
